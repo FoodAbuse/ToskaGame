@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lily Scenes/JohnMainMenu lilycopy.unity
     guid: 681243d403a044a41b5df084cce15e23
   - enabled: 1
