@@ -65,4 +65,9 @@ public class FootstepTrigger : MonoBehaviour
         prevFootstep = currentFootstep;
     }
 
+    public void PlaceholderFootstep()
+    {
+
+    }
+
 }
