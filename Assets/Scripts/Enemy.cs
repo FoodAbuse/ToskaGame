@@ -140,17 +140,17 @@ public class Enemy : MonoBehaviour, IDamageable
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        UpdateHealthbar();
+        //UpdateHealthbar();
         if (currentHealth <= 0)
         {
             Die();
         }
     }
 
-    private void UpdateHealthbar()
-    {
-        healthBar.fillAmount = (currentHealth / maximumHealth);
-    }
+    // private void UpdateHealthbar()
+    // {
+    //     healthBar.fillAmount = (currentHealth / maximumHealth);
+    // }
 
     private void Die()
     {

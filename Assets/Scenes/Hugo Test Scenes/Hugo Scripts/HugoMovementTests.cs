@@ -60,6 +60,16 @@ public class HugoMovementTests : MonoBehaviour
     private bool isOutside;
 
     private Rigidbody rb;
+    [Space(8)]
+    [Header("Dodge")]
+    [SerializeField]
+    private float dodgeDistance = 3f;
+    [SerializeField]
+    private float dodgeSpeed = 10f;
+    [SerializeField]
+    private float dodgeCooldown = 1f;
+    private bool isDodging = false;
+    private float lastDodgeTime = -999f;
 
     [Space(10)]
     [Header("World Interaction Stuff")]
@@ -233,6 +243,26 @@ public class HugoMovementTests : MonoBehaviour
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, toOffsetRotation, rotationSpeed * Time.deltaTime);
                 }
             }
+
+            // Dodge input (spacebar)
+            if (!isDodging && Time.time > lastDodgeTime + dodgeCooldown && Keyboard.current[Key.Space].wasPressedThisFrame)
+            {
+                Vector3 dodgeDir = Vector3.zero;
+                Vector2 inputVec = playerControls.ReadValue<Vector2>();
+                if (inputVec.x != 0 || inputVec.y != 0)
+                {
+                    // Prefer current moveDirection
+                    dodgeDir = moveDirection.normalized;
+                }
+                else
+                {
+                    dodgeDir = transform.forward;
+                }
+
+                if (dodgeDir.sqrMagnitude < 0.001f) dodgeDir = transform.forward;
+                lastDodgeTime = Time.time;
+                StartCoroutine(DoDodge(dodgeDir));
+            }
                 
 
 
@@ -344,6 +374,30 @@ public class HugoMovementTests : MonoBehaviour
         // }
 
         // Recieve animation string instead, set this as a global event in game manager that changes multiple values
+    }
+
+    System.Collections.IEnumerator DoDodge(Vector3 dir)
+    {
+        isDodging = true;
+        bool prevCanMove = canMove;
+        canMove = false;
+
+        float duration = dodgeDistance / dodgeSpeed;
+        float elapsed = 0f;
+
+        // Optionally trigger an animator trigger here
+        var animator = gameObject.GetComponentInChildren<Animator>();
+        if (animator != null) animator.SetTrigger("Dodge");
+
+        while (elapsed < duration)
+        {
+            transform.Translate(dir * dodgeSpeed * Time.deltaTime, Space.World);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        canMove = prevCanMove;
+        isDodging = false;
     }
 
     public void PassInteractable(HugoInteractable i)
