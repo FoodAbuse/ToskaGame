@@ -5148,7 +5148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 89940670565936065, guid: c4b0a6c6a71b3da42b61f694acacff62, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.41
+      value: 1.748
       objectReference: {fileID: 0}
     - target: {fileID: 89940670565936065, guid: c4b0a6c6a71b3da42b61f694acacff62, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5181,6 +5181,14 @@ PrefabInstance:
     - target: {fileID: 89940670565936065, guid: c4b0a6c6a71b3da42b61f694acacff62, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 89940670565936068, guid: c4b0a6c6a71b3da42b61f694acacff62, type: 3}
+      propertyPath: m_Height
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 89940670565936068, guid: c4b0a6c6a71b3da42b61f694acacff62, type: 3}
+      propertyPath: m_Radius
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 89940670565936069, guid: c4b0a6c6a71b3da42b61f694acacff62, type: 3}
       propertyPath: player
@@ -6569,11 +6577,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57cab260be398df4db1b87dce2b6b68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 10
   boxWidth: 1
   boxHeight: 1.5
   boxDepth: 1
-  cooldown: 0.05
+  cooldown: 1
   attackOrigin: {fileID: 1408110794}
   hitMask:
     serializedVersion: 2
@@ -6584,10 +6592,13 @@ MonoBehaviour:
   hitStopDuration: 0.2
   slowMoScale: 0.5
   slowMoDuration: 1
-  pushForce: 5
+  pushForce: 1
   pushUpForce: 0.5
   pushBackDistance: 1
   pushDuration: 0.18
+  hitEffectPrefab: {fileID: 4608472978808972607, guid: 0f0460d5486587b4a8a5995b1669df22, type: 3}
+  hitEffectOffset: {x: 0, y: 0, z: 0}
+  hitEffectLifetime: 2
 --- !u!1001 &2065672384
 PrefabInstance:
   m_ObjectHideFlags: 0

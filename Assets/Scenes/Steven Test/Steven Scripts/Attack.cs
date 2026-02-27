@@ -42,6 +42,13 @@ public class Attack : MonoBehaviour
     public float pushBackDistance = 1f;
     [Tooltip("Duration over which to move NavMeshAgent targets")]
     public float pushDuration = 0.18f;
+    [Header("Hit VFX")]
+    [Tooltip("Particle system prefab to spawn when a hit lands")]
+    public ParticleSystem hitEffectPrefab;
+    [Tooltip("Local offset applied to the hit effect spawn position")]
+    public Vector3 hitEffectOffset = Vector3.zero;
+    [Tooltip("How long to keep the spawned effect alive (seconds)")]
+    public float hitEffectLifetime = 2f;
 
     float lastAttackTime = -999f;
 
@@ -72,10 +79,14 @@ public class Attack : MonoBehaviour
             Collider col = hits[i];
             if (debug) Debug.Log($"[Attack] Hit collider: {col.name} on {col.gameObject.name}");
 
+            // closest point on collider to the attack center
+            Vector3 hitPoint = col.ClosestPoint(center) + hitEffectOffset;
+
             IDamageable d = col.GetComponentInParent<IDamageable>();
             if (d != null)
             {
                 d.TakeDamage(damage);
+                SpawnHitEffect(hitPoint, col.transform);
                 TriggerImpactFeedback();
                 ApplyPushback(col);
                 continue;
@@ -86,6 +97,7 @@ public class Attack : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
+                SpawnHitEffect(hitPoint, col.transform);
                 TriggerImpactFeedback();
                 ApplyPushback(col);
             }
@@ -180,6 +192,14 @@ public class Attack : MonoBehaviour
         }
 
         agent.isStopped = prevStopped;
+    }
+
+    void SpawnHitEffect(Vector3 position, Transform parent = null)
+    {
+        if (hitEffectPrefab == null) return;
+        ParticleSystem ps = Instantiate(hitEffectPrefab, position, Quaternion.identity, parent);
+        ps.Play();
+        Destroy(ps.gameObject, hitEffectLifetime);
     }
 
     void OnDrawGizmosSelected()
