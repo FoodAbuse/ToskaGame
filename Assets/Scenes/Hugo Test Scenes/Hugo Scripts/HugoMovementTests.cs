@@ -252,7 +252,8 @@ public class HugoMovementTests : MonoBehaviour
                 if (inputVec.x != 0 || inputVec.y != 0)
                 {
                     // Prefer current moveDirection
-                    dodgeDir = moveDirection.normalized;
+                    //dodgeDir = moveDirection.normalized;
+                    dodgeDir = transform.forward;
                 }
                 else
                 {
