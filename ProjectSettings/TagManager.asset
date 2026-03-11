@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DoorTransition
   - Enemy
+  - EnemyTarget
   layers:
   - Default
   - TransparentFX
