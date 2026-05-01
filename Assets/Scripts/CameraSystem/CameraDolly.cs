@@ -11,9 +11,7 @@ public class CameraDolly : MonoBehaviour
     public bool constrainPosX = false;
     public bool constrainPosY = false;
     public bool constrainPosZ = false;
-    public bool constrainRotX = false;
-    public bool constrainRotY = false;
-    public bool constrainRotZ = false;
+   
     [HideInInspector]
     public Vector3 offset;
     [HideInInspector]
@@ -56,6 +54,7 @@ public class CameraDolly : MonoBehaviour
             float z = focus.transform.position.z + offset.z;
             transform.position = new Vector3(transform.position.x, transform.position.y, z);
         }
+        
     } 
 
 
