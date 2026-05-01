@@ -11,7 +11,7 @@ public class InventoryItem
     public Sprite icon;
     public Object itemData;
     public bool IsRotated { get; private set; }
-
+    
     public int Width => IsRotated ? baseHeight : baseWidth;
     public int Height => IsRotated ? baseWidth : baseHeight;
 

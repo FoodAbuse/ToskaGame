@@ -55,6 +55,7 @@ public class InventoryController : MonoBehaviour
         // Handle drag start
         if (e.type == EventType.MouseDown && e.button == 0 && draggingItem == null)
         {
+            // check if the current event is a  Mouse click
             for (int x = 0; x < gridWidth; x++)
             {
                 for (int y = 0; y < gridHeight; y++)
