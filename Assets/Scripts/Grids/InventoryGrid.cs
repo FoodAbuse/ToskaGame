@@ -21,6 +21,7 @@ public class InventoryGrid
 
     public bool CanPlaceItem(InventoryItem item, GridPosition position)
     {
+        // this Method checks if the item can be placed into the grid
         if (item == null)
             return false;
 
@@ -38,6 +39,7 @@ public class InventoryGrid
             for (int y = 0; y < itemHeight; y++)
             {
                 if (Cells[position.X + x, position.Y + y] != null)
+                    // checks if any grid positions have been filled
                     return false;
             }
         }

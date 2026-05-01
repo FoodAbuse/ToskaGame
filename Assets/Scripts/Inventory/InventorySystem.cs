@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class InventorySystem : MonoBehaviour
 {
-    private readonly List<InventoryItem> items = new List<InventoryItem>();
+    private readonly List<InventoryItem> items = new List<InventoryItem>(); 
 
     public IReadOnlyList<InventoryItem> Items => items.AsReadOnly();
 
     public void AddItem(string itemName, string description, int amount = 1)
     {
         if (amount <= 0)
-            return;
+            return; // exits the method if there is less than 0 amount of items
 
         InventoryItem existingItem = items.FirstOrDefault(i => i.itemName == itemName && i.description == description);
         if (existingItem != null)
@@ -56,4 +56,5 @@ public class InventorySystem : MonoBehaviour
     {
         return items.Select(item => new InventoryItem(item)).ToList();
     }
+    
 }
