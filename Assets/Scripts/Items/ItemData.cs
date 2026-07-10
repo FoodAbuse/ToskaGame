@@ -6,7 +6,8 @@ public enum ItemRarity
     Uncommon,
     Rare,
     Epic,
-    Legendary
+    Legendary,
+    Cursed,
 }
 
 public enum ItemType
@@ -16,7 +17,9 @@ public enum ItemType
     Weapon,
     Armor,
     Material,
-    Quest
+    QuestItem,
+    Cursed,
+    Upgrades,
 }
 
 [CreateAssetMenu(fileName = "NewItem", menuName = "Inventory/Item Data")]

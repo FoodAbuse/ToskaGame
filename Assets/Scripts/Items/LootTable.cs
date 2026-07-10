@@ -15,11 +15,12 @@ public class LootTable : ScriptableObject
     [Header("Rarity Weights")]
     [SerializeField] private List<RarityWeight> rarityWeights = new List<RarityWeight>
     {
-        new RarityWeight { rarity = ItemRarity.Common, weight = 50 },
-        new RarityWeight { rarity = ItemRarity.Uncommon, weight = 30 },
+        new RarityWeight { rarity = ItemRarity.Common, weight = 40 },
+        new RarityWeight { rarity = ItemRarity.Uncommon, weight = 35 },
         new RarityWeight { rarity = ItemRarity.Rare, weight = 15 },
-        new RarityWeight { rarity = ItemRarity.Epic, weight = 4 },
-        new RarityWeight { rarity = ItemRarity.Legendary, weight = 1 }
+        new RarityWeight { rarity = ItemRarity.Epic, weight = 5 },
+        new RarityWeight { rarity = ItemRarity.Legendary, weight = 2 },
+        new RarityWeight { rarity = ItemRarity.Cursed, weight = 3 }
     };
 
     public IReadOnlyList<RarityWeight> RarityWeights => rarityWeights;
