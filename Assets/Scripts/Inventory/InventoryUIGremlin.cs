@@ -214,7 +214,7 @@ public class InventoryUIGremlin : UIReporter
         // we go through and test each gremlin to see if they can say if their slots hold the right item
         // if they are wrong it means that the heldItem key in the Dictionary doesnt have the correct positions saved
         // and that means it needs to be redrawn
-        Debug.Log("UpdateCalled");
+        //Debug.Log("UpdateCalled");
         List<InventoryItem> inventoryItemsToRemove = new List<InventoryItem>();
         List<InventoryItem> inventoryItemsToAdd = new List<InventoryItem>();
         foreach (var space in _itemGrid.ItemGridSpaces)
@@ -258,7 +258,7 @@ public class InventoryUIGremlin : UIReporter
         {
             //now we create the item to display.
             //Vector2Int offset = space.Key - space.Value.heldItem.itemData.CalculateOriginPoint();
-            Vector2Int localOrigin = ItemData.CalculateOriginPoint(t._holdingGridPositions.ToArray());
+            Vector2Int localOrigin = ItemData.CalculateOriginPoint(t.HoldingGridPositions.ToArray());
             Vector3 targetPos = GridSpaceInteractables[_itemGrid.GridSpaces[localOrigin]].gameObject.GetComponent<RectTransform>().anchoredPosition;
             DisplayItem (t, targetPos);
         }
@@ -275,7 +275,7 @@ public class InventoryUIGremlin : UIReporter
         newUIImage.GetComponent<RectTransform>().anchoredPosition = targetPos;
         UIItemSpriteGremlin spriteGremlin = newUIImage.AddComponent<UIItemSpriteGremlin>();
         HeldItemSprites.Add(itemToDisplay, spriteGremlin);
-        spriteGremlin.ItemPositions = new List<Vector2Int>(itemToDisplay._holdingGridPositions);
+        spriteGremlin.ItemPositions = new List<Vector2Int>(itemToDisplay.HoldingGridPositions);
         
     }
     // This class handles the reference of the Inventory panel under the canvas.

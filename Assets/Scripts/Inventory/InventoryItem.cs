@@ -15,9 +15,19 @@ public class InventoryItem
     public ItemData itemData;
     public bool IsRotated { get; private set; }
 
-    public ItemGrid _holdingGrid;                          // contains reference to the slots its being held by so we can tell them to remove this later
-    public List<Vector2Int> _holdingGridPositions = new List<Vector2Int>();
+    private ItemGrid _holdingGrid;                          // contains reference to the slots its being held by so we can tell them to remove this later
+    private List<Vector2Int> _holdingGridPositions = new List<Vector2Int>();
 
+    public ItemGrid HoldingGrid => _holdingGrid;
+    public List<Vector2Int> HoldingGridPositions
+    {
+        get
+        {
+            if(_holdingGridPositions == null || _holdingGridPositions.Count == 0)
+                Debug.Log("well 'ello, 'ello, 'ello. whats all this then. the Bloody list is empty?");
+            return _holdingGridPositions;
+        }
+    }
     
     
     public int Width => IsRotated ? baseHeight : baseWidth;
@@ -77,9 +87,20 @@ public class InventoryItem
         return $"{itemName} ({Width}x{Height}) - {description}";
     }
 
-    public void AssignInventory()
+    public void AssignInventory(ItemGrid newOwner, Vector2Int[]  newHeldPositions)
     {
         // this will be used to tell it its owning inventories
+        _holdingGrid = newOwner;
+        if (newHeldPositions.Length > 0)
+        {
+
+
+            _holdingGridPositions = new List<Vector2Int>();
+            for (int i = 0; i < newHeldPositions.Length; i++)
+            {
+                _holdingGridPositions.Add(newHeldPositions[i]);
+            }
+        }
     }
     public void ClearOwningInventory()
     {
