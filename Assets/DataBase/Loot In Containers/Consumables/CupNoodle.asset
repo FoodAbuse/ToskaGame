@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f826a400e115ea1499a600420a039331, type: 3}
-  m_Name: FirstAidKit
+  m_Name: CupNoodle
   m_EditorClassIdentifier: 
-  itemName: Painkillers
-  _sprite: {fileID: 0}
-  width: 2
-  height: 2
+  itemName: CanTuna
+  icon: {fileID: 0}
+  width: 1
+  height: 1
   rarity: 0
   itemType: 0
-  worldItemDefault: {fileID: 0}
-  _gridPositions: []

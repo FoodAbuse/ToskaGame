@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f826a400e115ea1499a600420a039331, type: 3}
-  m_Name: CanVeggetables
+  m_Name: CanBeans
   m_EditorClassIdentifier: 
   itemName: CanVeggtables
   _sprite: {fileID: 1265049348, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
