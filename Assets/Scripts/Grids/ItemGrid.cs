@@ -83,15 +83,15 @@ namespace Grids
                     if (spacesValid)
                     {
                         InventoryItem newPlacedItem = new InventoryItem(incomingData);
-                        newPlacedItem._holdingGrid = this;
-                    
+                        List<Vector2Int> updatedGridPositions = new List<Vector2Int>();
                         foreach (Vector2Int spaceCoord in incomingData.GridPositions)
                         {
                             Vector2Int localSpaceCoords = spaceCoord + Offset;
                             ItemGridSpace space = ItemGridSpaces[localSpaceCoords];
                             space.heldItem = newPlacedItem;
-                            newPlacedItem._holdingGridPositions.Add(localSpaceCoords);
+                            updatedGridPositions.Add(localSpaceCoords);
                         }
+                        newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray());
                         Debug.Log("return True");
                         UISystem.UpdateInventoryUI.Raise();
                         return true;
@@ -146,14 +146,15 @@ namespace Grids
                         // create an Inventory Item and tell each position that it is their item
                         InventoryItem newPlacedItem = new InventoryItem(incomingData);
                     
+                        List<Vector2Int> updatedGridPositions = new List<Vector2Int>();
                         foreach (Vector2Int spaceCoord in incomingData.GridPositions)
                         {
                             Vector2Int localSpaceCoords = spaceCoord + Offset;
                             ItemGridSpace space = ItemGridSpaces[localSpaceCoords];
                             space.heldItem = newPlacedItem;
-                            newPlacedItem._holdingGrid = this;
-                            newPlacedItem._holdingGridPositions.Add(spaceCoord);
+                            updatedGridPositions.Add(localSpaceCoords);
                         }
+                        newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray());
                         Debug.Log("return True");
                         UISystem.UpdateInventoryUI.Raise();
                         return true;
