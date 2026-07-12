@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Bandages
   m_EditorClassIdentifier: 
   itemName: Bandages
-  icon: {fileID: 0}
+  _sprite: {fileID: -342417110, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
   width: 1
   height: 1
   rarity: 1
   itemType: 1
+  worldItemDefault: {fileID: 0}
+  _gridPositions: []

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Carrots
   m_EditorClassIdentifier: 
   itemName: Carrots
-  _sprite: {fileID: 1265049348, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
+  _sprite: {fileID: 503012072, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
   width: 1
   height: 1
   rarity: 0

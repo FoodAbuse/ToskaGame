@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f826a400e115ea1499a600420a039331, type: 3}
   m_Name: TeaBag
   m_EditorClassIdentifier: 
-  itemName: 
-  _sprite: {fileID: 699009337, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
+  itemName: Egg
+  _sprite: {fileID: -1723820941, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
   width: 1
   height: 1
   rarity: 0
