@@ -1,15 +1,40 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryGrid
+namespace Grids
 {
-    public int Width { get; }
-    public int Height { get; }
-    public InventoryItem[,] Cells { get; }
+    public class InventoryGrid 
+    {
+        /*public InventoryGrid(int GridHeight, int GridWidth) :  base(GridHeight, GridWidth)
+        {
+            for (int y = 0; y < GridHeight; y++)
+            {
+                for (int x = 0; x < GridWidth; x++)
+                {
+                    // now we construct the gridspace for that coordinate
+                    GridSpace newgridSpace =  new GridSpace(new Vector2Int(x, y));
+                    //and add it to the dictionary
+                    //gridSpaces.Add(new Vector2Int(x,y), newgridSpace);
+                }
+            }
+        } */
+        //new cameron code here
+        public bool AddItemToGrid(ItemData incomingData)
+        {
+            // we check each spot of the grid till we find a valid position and then slot the item in
+            //here we attempt to add the item to the grid
+    
+            return false;
+        }
 
-    private readonly List<InventoryItem> items = new List<InventoryItem>();
-    private readonly Dictionary<InventoryItem, GridPosition> itemPositions = new Dictionary<InventoryItem, GridPosition>();
-
+        public bool AddItemToGrid(ItemData incomingData, Vector2Int targetPosition)
+        {
+            return false;
+        }
+    
+    
+    
+        /*
+    
     public InventoryGrid(int width, int height)
     {
         Width = Mathf.Max(1, width);
@@ -21,10 +46,10 @@ public class InventoryGrid
 
     public bool CanPlaceItem(InventoryItem item, GridPosition position)
     {
-        // this Method checks if the item can be placed into the grid
+       /* // this Method checks if the item can be placed into the grid
         if (item == null)
             return false;
-
+        
         int itemWidth = item.Width;
         int itemHeight = item.Height;
 
@@ -45,6 +70,31 @@ public class InventoryGrid
         }
 
         return true;
+       
+       // rewriting this to use the Iventory Items ItemData
+       if(item == null)
+           return false;
+       // instead of grabbing the items width and height
+       // we will instead refer to the items Itemdata to determine its grid positions
+       // its grid positions will always be local so some manipulation is needed
+       Vector2Int[] gridPositions = new Vector2Int[item.itemData.GridPositions.Count];
+       item.itemData.GridPositions.CopyTo(gridPositions, 0); // create a copy of the itemdatas patterns
+       // now we go through the array
+       foreach (Vector2Int gridPosition in gridPositions)
+       {
+           // we check if corresponding cells are Empty or if they contain something
+           // for now we will assume the holding point (where the mouse is dragging from is the bottom left hand corner
+           
+           //grab the position offset by the ItemsGridPosition maybe rename them to local grid position
+           if (Cells[gridPosition.x, gridPosition.y] != null)
+           {
+               // check if the position is filled if so then return false
+               return false;
+               // AT THE MOMENT THIS CHECKS IT FROM THE BASE OF THE GRID DOESNT ACCOUNT FOR MOUSE POSITION OR NUTHIN
+               // THO I think thats fine for this method
+           }
+       }
+       return true;
     }
 
     public bool PlaceItem(InventoryItem item, GridPosition position, bool rotate = false)
@@ -114,7 +164,7 @@ public class InventoryGrid
         return Cells[position.X, position.Y] != null;
     }
 
-    public GridPosition? GetItemPosition(InventoryItem item)
+    public GridPosition GetItemPosition(InventoryItem item)
     {
         if (item == null || !itemPositions.ContainsKey(item))
             return null;
@@ -124,11 +174,11 @@ public class InventoryGrid
 
     public bool RotateItem(InventoryItem item)
     {
-        GridPosition? pos = GetItemPosition(item);
+        GridPosition pos = GetItemPosition(item);
         if (pos == null)
             return false;
 
-        return MoveItem(item, pos.Value, rotate: true);
+        return MoveItem(item, pos, rotate: true);
     }
 
     public bool TryFindFirstAvailablePosition(InventoryItem item, out GridPosition position)
@@ -138,15 +188,15 @@ public class InventoryGrid
 
     public bool TryFindFirstAvailablePlacement(InventoryItem item, out GridPosition position, out bool rotateForPlacement)
     {
-        position = default;
-        rotateForPlacement = false;
+        position = default; // position is 0,0 to begin with I believe
+        rotateForPlacement = false; // dont rotate for placement
 
         if (item == null)
-            return false;
+            return false;       // exit out if no item has been passed
 
-        int defaultWidth = item.Width;
+        int defaultWidth = item.Width;      // get the items width
         int defaultHeight = item.Height;
-        if (TryFindPositionForSize(defaultWidth, defaultHeight, out position))
+        if (TryFindPositionForSize(defaultWidth, defaultHeight, out position))  // we will replace this
         {
             return true;
         }
@@ -260,4 +310,7 @@ public class InventoryGrid
             }
         }
     }
+    */
+    }
 }
+

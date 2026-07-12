@@ -1,19 +1,32 @@
+using System.Collections.Generic;
 using UnityEngine;
+using Grids;
 
 [System.Serializable]
 public class InventoryItem
 {
+    // this class will be used to represent the Items when they are in a UI state
     public string itemName;
     public string description;
-    public int quantity;
+    public int quantity = 1;
     public int baseWidth;
     public int baseHeight;
     public Sprite icon;
-    public Object itemData;
+    public ItemData itemData;
     public bool IsRotated { get; private set; }
+
+    public ItemGrid _holdingGrid;                          // contains reference to the slots its being held by so we can tell them to remove this later
+    public List<Vector2Int> _holdingGridPositions = new List<Vector2Int>();
+
+    
     
     public int Width => IsRotated ? baseHeight : baseWidth;
     public int Height => IsRotated ? baseWidth : baseHeight;
+
+    public InventoryItem(ItemData itemData)
+    {
+        this.itemData = itemData;
+    }
 
     public InventoryItem(string itemName, string description, int quantity = 1)
     {
@@ -26,7 +39,7 @@ public class InventoryItem
         itemData = null;
     }
 
-    public InventoryItem(string itemName, string description, int baseWidth, int baseHeight, Sprite icon = null, Object itemData = null)
+    public InventoryItem(string itemName, string description, int baseWidth, int baseHeight, Sprite icon = null, ItemData itemData = null)
     {
         this.itemName = itemName;
         this.description = description;
@@ -62,5 +75,23 @@ public class InventoryItem
     public override string ToString()
     {
         return $"{itemName} ({Width}x{Height}) - {description}";
+    }
+
+    public void AssignInventory()
+    {
+        // this will be used to tell it its owning inventories
+    }
+    public void ClearOwningInventory()
+    {
+        // this should clear itself from its current inventories
+        foreach(var item in _holdingGridPositions)
+            _holdingGrid.ItemGridSpaces[item].heldItem = null;       
+        
+        //this should go through all the gridspaces in the holding inventory that holds this item and remove it
+        
+        // then no that all of its held positions have lost their reference to it.
+        // then this itself should forget those positions and the grid they belong to
+        _holdingGridPositions.Clear();
+        _holdingGrid = null;
     }
 }

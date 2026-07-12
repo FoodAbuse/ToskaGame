@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Stick
   m_EditorClassIdentifier: 
   itemName: Stick
-  icon: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 630bd64b2f2aff14d9db5b663454a0b4, type: 3}
   width: 1
   height: 2
   rarity: 0
   itemType: 4
+  worldItemPrefab: {fileID: 66032571329618027, guid: bb3b90e963fd5894d82718165a6b239c, type: 3}
+  _gridPositions:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}

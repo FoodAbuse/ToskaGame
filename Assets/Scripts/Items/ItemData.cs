@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public enum ItemRarity
 {
@@ -27,7 +29,20 @@ public class ItemData : ScriptableObject
 {
     [Header("Item Info")]
     public string itemName;
-    public Sprite icon;
+    [SerializeField]
+    private Sprite _sprite;
+
+    public Sprite Sprite
+    {
+        get
+        {
+            if (_sprite == null)
+            {
+                _sprite = Resources.Load<Sprite>("MissingDefaults/MissingSprite");
+            }
+            return _sprite;
+        }
+    }
 
     [Header("Grid Size")]
     [Min(1)] public int width = 1;
@@ -38,4 +53,85 @@ public class ItemData : ScriptableObject
 
     [Header("Type")]
     public ItemType itemType = ItemType.Misc;
+
+    [SerializeField]
+    private GameObject worldItemDefault;
+
+    public GameObject WorldItemPrefab
+    {
+        get
+        {
+            if (worldItemDefault == null)
+            {
+                worldItemDefault = Resources.Load<GameObject>("MissingDefaults/MissingPrefab");
+            }
+            return worldItemDefault;
+        }
+    }// the world representation of this Item
+    // here we will have the grid of bools that will represent the Items space in the inventory
+    [SerializeField]
+    private List<Vector2Int> _gridPositions;
+
+    public List<Vector2Int> GridPositions  // rename these plx cam
+    {
+        get
+        {
+            if (_gridPositions == null || _gridPositions.Count == 0)
+            {
+                _gridPositions = new List<Vector2Int>();
+                _gridPositions.Add(new Vector2Int(0, 0)); // if _gridPositions returns null generate it with a list of 1 element
+                return _gridPositions;
+            }
+            else
+            {
+                return _gridPositions;
+            }
+        }
+    } // this will track the positions the Item uses in the inventory
+
+    public Vector2Int CalculateOriginPoint()
+    {
+        // this method will calculate an Origin for grid shifting items
+        // we the list for the "shortest Vector2"
+        /*
+        Vector2Int shortestVector = GridPositions[0];
+        bool multipleShortest = false;
+        foreach (Vector2Int gridPosition in GridPositions)
+        {
+            if (gridPosition.magnitude < shortestVector.magnitude)
+                shortestVector = gridPosition;
+            multipleShortest = false;
+            else if (gridPosition.magnitude == shortestVector.magnitude)
+            {
+                multipleShortest = true;
+            }
+        } */
+        // for now we will assume we just want the Shortest X leftmost X coordinate
+        Vector2Int originPoint = GridPositions[0];
+        foreach(Vector2Int gridPosition in GridPositions)
+        { // check if its the tallest
+            if (gridPosition.x <= originPoint.x)
+            {
+                if(gridPosition.y <= originPoint.y)
+                    originPoint = gridPosition;
+            }
+        }
+        return originPoint;
+    }
+
+    public static Vector2Int CalculateOriginPoint(Vector2Int[]  gridPositions)
+    {
+        Debug.Log(gridPositions.Length);
+        Vector2Int originPoint = gridPositions[0];
+        foreach(Vector2Int gridPosition in gridPositions)
+        { // check if its the tallest
+            if (gridPosition.x <= originPoint.x)
+            {
+                if(gridPosition.y <= originPoint.y)
+                    originPoint = gridPosition;
+            }
+        }
+        return originPoint;
+    }
 }
+

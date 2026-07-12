@@ -20,6 +20,8 @@ public class TheInteractionController : MonoBehaviour
     private Camera activeCamera;
     private Renderer currentRenderer;
     private Color[] originalColors;
+    
+    
 
     private void Awake()
     {
@@ -129,5 +131,10 @@ public class TheInteractionController : MonoBehaviour
 
         currentRenderer = null;
         originalColors = null;
+    }
+
+    private void UIInteraction()
+    {
+       
     }
 }

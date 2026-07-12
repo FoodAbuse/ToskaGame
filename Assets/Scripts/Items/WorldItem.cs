@@ -8,14 +8,20 @@ public class WorldItem : MonoBehaviour, IInteractable
     [Min(1)]
     [SerializeField] private int quantity = 1;
 
-    [Header("Target Inventory")]
-    [SerializeField] private InventoryController playerInventory;
+    //[Header("Target Inventory")]
+    private UIController _playerInventory;
 
-    private void Reset()
+    public UIController PlayerInventoryController
     {
-        Collider worldCollider = GetComponent<Collider>();
-        if (worldCollider != null)
-            worldCollider.isTrigger = true;
+        get
+        {
+            if (_playerInventory == null)
+            {
+                _playerInventory = FindObjectOfType<UIController>();
+            }
+
+            return _playerInventory;
+        }
     }
 
     public void Interact()
@@ -26,49 +32,25 @@ public class WorldItem : MonoBehaviour, IInteractable
             return;
         }
 
-        InventoryController inventoryController = ResolveInventoryController();
-        if (inventoryController == null || inventoryController.InventoryGrid == null)
-        {
-            Debug.LogWarning($"No valid InventoryController found for WorldItem '{name}'.");
-            return;
-        }
+    
 
-        InventoryItem inventoryItem = CreateInventoryItem();
-        bool added = inventoryController.InventoryGrid.TryAutoPlaceItem(inventoryItem, out _, out _);
 
-        if (added)
+        // here we call Inventory that this is being interacted with and pass it the item and the ItemData its got
+        //or attempt to anyway
+        //yahoo!
+        if (PlayerInventoryController.playerInventory.AddItemToGrid(itemData))
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Debug.Log($"Could not pick up {itemData.itemName}: inventory has no space.");
+            Destroy(gameObject); // attempt to add item. if it does. then neck this. lol. lmao. ecks Dee
         }
     }
 
-    private InventoryController ResolveInventoryController()
+    public static void Drop(Vector3 dropPos, Quaternion rotation, ItemData itemData)
     {
-        if (playerInventory != null)
-            return playerInventory;
-
-        playerInventory = FindObjectOfType<InventoryController>();
-        return playerInventory;
+        Instantiate(itemData.WorldItemPrefab,dropPos,rotation);
     }
 
-    private InventoryItem CreateInventoryItem()
-    {
-        InventoryItem item = new InventoryItem(
-            itemData.itemName,
-            itemData.rarity.ToString(),
-            itemData.width,
-            itemData.height,
-            itemData.icon,
-            itemData
-        );
+ 
 
-        if (quantity > 1)
-            item.AddQuantity(quantity - 1);
-
-        return item;
-    }
+    
 }
+
