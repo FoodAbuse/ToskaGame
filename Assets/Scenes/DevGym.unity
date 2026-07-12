@@ -1216,11 +1216,11 @@ MonoBehaviour:
   containerGrid: {fileID: 0}
   width: 5
   height: 5
-  hasGeneratedLoot: 1
+  hasGeneratedLoot: 0
   inventoryTemplate: {fileID: 11400000, guid: f8a4f7cc2d5e0b343acaba9784a2a093, type: 2}
   lootGenerator:
     itemDatabase: {fileID: 11400000, guid: 1c559688b0816774eb8ac87e24f3fd71, type: 2}
-    lootTable: {fileID: 11400000, guid: ef4bd743344f8ba49b7a63b32f3e4e64, type: 2}
+    lootTable: {fileID: 11400000, guid: edb6f7f51074d5546bb7e3e8a869dd8f, type: 2}
     settings: {fileID: 11400000, guid: b8fc89c1bfdb72f4d87ecc5e59dc704a, type: 2}
 --- !u!1 &1548426973
 GameObject:
