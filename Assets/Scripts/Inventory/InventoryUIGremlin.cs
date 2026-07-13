@@ -70,30 +70,24 @@ public class InventoryUIGremlin : UIReporter
         ScreenOffset = newPanelOffset;  // have to do this here since we cant have a constructor on a Monobehaviour ;-; will probably move all this to a handler that instantiates this
         _itemGrid = inventoryGrid;
         
-        _UIContainer = new GameObject("UIContainer");
-        _UIContainer.transform.SetParent(gameObject.transform);
-        RectTransform uiRect = _UIContainer.AddComponent<RectTransform>();
-        _slotsParent = new GameObject("Slot Parent");
-        _slotsParent.transform.SetParent(_UIContainer.transform,false);
-        _itemsParent = new GameObject("Items Parent");
-        _itemsParent.transform.SetParent(_UIContainer.transform,false);
-
-        InventoryPanel.transform.SetParent(_slotsParent.transform,false);
+        // Getting Size for the inventory Panel here
+        InventoryPanel.transform.SetParent(transform,false);
         RectTransform ipRect = InventoryPanel.GetComponent<RectTransform>();
         RectTransform slotFabRect = InventorySlotPrefab.GetComponent<RectTransform>();
-        ipRect.localScale = 
+        Vector3 scaleTarget = 
           UISystem.ScaleToSize2(ipRect.localScale,
             UISystem.SizeToFitGrid(InventorySlotPrefab, inventoryGrid.GetGridSize() + new Vector2Int(1,1), paddingWidth, paddingHeight),
-              ipRect.sizeDelta);        // we add 1 to the getGridsize to account for 0,0 being 1 slot
-
-        // here we will handle positioning the panels 
+              ipRect.sizeDelta);        
+        // we instead set its size to fit this scae
+        ipRect.sizeDelta = scaleTarget * ipRect.sizeDelta;
+        
         // for now we will use a switch and an int. In the future Id like to change to a float for other positions (maybe a V2 for vertical positioning)
         Rect areaRect = Screen.safeArea;
         // perform calculation to return screen offset scaled into the Safe area -1 far left 0 mid, 1 max
         Vector2 targetPosition;
         targetPosition.x = ((ScreenOffset.x - -1) * (areaRect.xMax - areaRect.xMin)) / 2 + 0;
         targetPosition.y = ((ScreenOffset.y - -1) * (areaRect.yMax - areaRect.yMin)) / 2;
-
+        
         
         //now we have to make sure that the Size of the final model will not be outside of the safe area
         float RectHalfwidth = (ipRect.rect.width*ipRect.localScale.x/2);
@@ -119,27 +113,32 @@ public class InventoryUIGremlin : UIReporter
             targetPosition.y -= (RectHalfheight- (areaRect.yMax - targetPosition.y));
         }
         
-        uiRect.anchorMax = new Vector2(0, 0);
-        uiRect.anchorMin = new Vector2(0, 0);
-        uiRect.anchoredPosition = targetPosition;
+        ipRect.anchorMax = new Vector2(0, 0);
+        ipRect.anchorMin = new Vector2(0, 0);
+        ipRect.anchoredPosition = targetPosition;
         //uiRect.rect.Set(0,0,uiRect.rect.width,uiRect.rect.height);
         
-        // create Item slots in order across the Panel
-                
-        //create a new InventorySlotPrefab to adjust then we delete it afterwards
-
+         // this is where we set up parent objects for holding the spaces and the Item Sprites. So they can be positioned
+         // easier
+        _slotsParent = new GameObject("Slot Parent");
+        _slotsParent.transform.SetParent(InventoryPanel.transform,false);
+        _itemsParent = new GameObject("Items Parent");
+        _itemsParent.transform.SetParent(_slotsParent.transform,false);
+        _slotsParent.AddComponent<RectTransform>().sizeDelta = 
+            ipRect.sizeDelta - new Vector2(paddingWidth , paddingHeight); 
+        //size the SlotsParent to be the size of the panel minus the padding (which shouldnt have been scaled)
+        RectTransform itemsParentRect = _itemsParent.AddComponent<RectTransform>();
+        itemsParentRect.anchorMax = new Vector2(0, 1);
+        itemsParentRect.anchorMin = new Vector2(0, 1);
+        itemsParentRect.SetAsLastSibling();
         
-        //for now we will just go off the corner of the panel, presumably which should be rect.x and rect.y
+
         Vector2Int gridslotCount = inventoryGrid.GetGridSize();
         
         Vector2 slotOffset = slotFabRect.rect.size;
         Vector3[] v = new Vector3[4];
         ipRect.GetWorldCorners(v);
         Vector2 targetPos = new Vector2(-(slotOffset.x*gridslotCount.x)/2,slotOffset.y * gridslotCount.y /2);//new Vector2(v[1].x + slotOffset.x, v[1].y + slotOffset.y);
-        
-        
-
-        
         
         //lets get size of the Panel. then place cubes in it
         float originalXOffset = targetPos.x; // so we can reset the offset each loop.
@@ -164,7 +163,9 @@ public class InventoryUIGremlin : UIReporter
                     {
                         // we check if that Space matches the Offset Origin for the Items data
                         // now we can create the item and add it to the held items list
-                        DisplayItem(value.heldItem, targetPos);
+                        Vector2 itemAnchorPos = new Vector2();
+                        //itemAnchorPos.x = slotOffset.x
+                        DisplayItem(value.heldItem, itemAnchorPos);
 
                     }
                     else
@@ -184,6 +185,7 @@ public class InventoryUIGremlin : UIReporter
             targetPos.x = originalXOffset;
             targetPos.y -= slotOffset.y;
         }
+        itemsParentRect.SetAsLastSibling(); // so it sits at the bottom of the heirarchy
         //find whatever is running the Inventory panels inventory code and tell it to create its prefabs idk
         ToskaUtilities.DebugItemList(inventoryGrid);
         
@@ -268,11 +270,27 @@ public class InventoryUIGremlin : UIReporter
     public void DisplayItem(InventoryItem itemToDisplay, Vector2 targetPos)
     {
         // this method will be for creating the Items sprite object and making sure the Held Items dictionary matches up
-        GameObject loadedUI = Resources.Load<GameObject>("BlankUIItem");
-        GameObject newUIImage = Instantiate(loadedUI, _itemsParent.transform);
-        newUIImage.GetComponent<Image>().sprite =
+        //GameObject loadedUI = Resources.Load<GameObject>("BlankUIItem");
+        GameObject newUIImage = new GameObject();
+        newUIImage.transform.parent = _itemsParent.transform;
+        RectTransform rect = newUIImage.AddComponent<RectTransform>();
+        newUIImage.AddComponent<Image>().sprite =
             itemToDisplay.itemData.Sprite; // hey dont worry bout it
-        newUIImage.GetComponent<RectTransform>().anchoredPosition = targetPos;
+        
+        rect.anchorMax = new Vector2(0.5f, .5f);
+        rect.anchorMin = new Vector2(0.5f,.5f);
+        rect.pivot = new Vector2(0, 1);
+        Vector2 spaceSizeDelta = InventorySlotPrefab.GetComponent<RectTransform>().sizeDelta;
+        
+        rect.sizeDelta = ToskaUtilities.GetRectSizeFromGridSpaces(itemToDisplay.HoldingGridPositions.ToArray())*spaceSizeDelta;
+        
+        Vector2 worldOrientated = ToskaUtilities.GetGridSpaceCorner(itemToDisplay.HoldingGridPositions.ToArray()) *spaceSizeDelta;
+        Vector2 gridOrientated = new Vector2(worldOrientated.x, -worldOrientated.y);
+        rect.anchoredPosition = gridOrientated;
+        Debug.Log(" the returned pivot is:"  + rect.pivot + " the slots size is "+ InventorySlotPrefab.GetComponent<RectTransform>().sizeDelta);
+        
+
+        //newUIImage.GetComponent<RectTransform>().anchoredPosition = targetPos;
         UIItemSpriteGremlin spriteGremlin = newUIImage.AddComponent<UIItemSpriteGremlin>();
         HeldItemSprites.Add(itemToDisplay, spriteGremlin);
         spriteGremlin.ItemPositions = new List<Vector2Int>(itemToDisplay.HoldingGridPositions);

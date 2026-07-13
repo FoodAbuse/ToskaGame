@@ -45,12 +45,12 @@ public static class UISystem
 
     public static void CloseAllUI()
     {
-        List<UIReporter> uiReporters = UIReporterRuntimeSet.GetItems();
-        foreach (var reporter in uiReporters)
+        List<UIReporter> uiReporterstoClose = new List<UIReporter>();
+        foreach (var reporter in UIReporterRuntimeSet.GetItems())
         {
-            reporter.CloseUI();
+            uiReporterstoClose.Add(reporter);
         }
-
+        uiReporterstoClose.ForEach(reporter => reporter.CloseUI());
     }
 
     public static void CloseInventoryUI()

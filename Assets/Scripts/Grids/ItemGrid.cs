@@ -92,7 +92,7 @@ namespace Grids
                             updatedGridPositions.Add(localSpaceCoords);
                         }
                         newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray());
-                        Debug.Log("return True");
+
                         UISystem.UpdateInventoryUI.Raise();
                         return true;
                     }

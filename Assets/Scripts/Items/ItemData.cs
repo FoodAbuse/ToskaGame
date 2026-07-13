@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine.Serialization;
 
 public enum ItemRarity
@@ -44,9 +45,9 @@ public class ItemData : ScriptableObject
         }
     }
 
-    [Header("Grid Size")]
-    [Min(1)] public int width = 1;
-    [Min(1)] public int height = 1;
+   // [Header("Grid Size")]
+    //[Min(1)] public int width = 1;
+    //[Min(1)] public int height = 1;
 
     [Header("Rarity")]
     public ItemRarity rarity = ItemRarity.Common;
@@ -133,5 +134,60 @@ public class ItemData : ScriptableObject
         }
         return originPoint;
     }
+
+    public Vector2Int GetLengths()
+    {
+        //this method will return the lenghts of its x,y
+        int xLength = 0;
+        int yLength = 0;
+        foreach (Vector2Int gridPosition in GridPositions)
+        {    if (gridPosition.x > xLength)
+            {
+                xLength = gridPosition.x;
+            }
+            if(gridPosition.y > yLength)
+            {
+                yLength = gridPosition.y;
+            }
+        }
+        return new Vector2Int(xLength+1, yLength+1);
+    }
+
+
+
+    public static Vector2Int GetLengths(Vector2Int[] vector2Ints)
+    {
+        int xMax = 0;
+        int xMin = 0;
+        int yMax = 0;
+        int yMin = 0;
+        for (int i = 0; i < vector2Ints.Length; i++)
+        {
+            if (vector2Ints[i].x > xMax)
+            {
+                xMax = vector2Ints[i].x;
+            }
+
+            if (vector2Ints[i].y > yMax)
+            {
+                yMax = vector2Ints[i].y;
+            }
+
+            if (vector2Ints[i].x < xMin)
+            {
+                xMin = vector2Ints[i].x;
+            }
+
+            if (vector2Ints[i].y < yMin)
+            {
+                yMin = vector2Ints[i].y;
+            }
+        }
+        Vector2Int lengths = new Vector2Int((Mathf.Abs(xMax-xMin)), Mathf.Abs(yMax-yMin));
+        Debug.Log(lengths.x);
+        
+        return lengths;
+    }
+    
 }
 

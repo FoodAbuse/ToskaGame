@@ -197,6 +197,7 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
                     else
                     {
                         //slot couldnt take item here. Drop the child
+                        WorldItem.Drop(UIInteractor.Instance.transform.position,Quaternion.identity, itemToStore);
                         MouserCatch();
                     }
                     return;

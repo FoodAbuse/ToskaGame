@@ -9,8 +9,8 @@ public class InventoryItem
     public string itemName;
     public string description;
     public int quantity = 1;
-    public int baseWidth;
-    public int baseHeight;
+    //public int baseWidth;
+    //public int baseHeight;
     public Sprite icon;
     public ItemData itemData;
     public bool IsRotated { get; private set; }
@@ -30,8 +30,8 @@ public class InventoryItem
     }
     
     
-    public int Width => IsRotated ? baseHeight : baseWidth;
-    public int Height => IsRotated ? baseWidth : baseHeight;
+    //public int Width => IsRotated ? baseHeight : baseWidth;
+    //public int Height => IsRotated ? baseWidth : baseHeight;
 
     public InventoryItem(ItemData itemData)
     {
@@ -43,19 +43,19 @@ public class InventoryItem
         this.itemName = itemName;
         this.description = description;
         this.quantity = Mathf.Max(0, quantity);
-        baseWidth = 1;
-        baseHeight = 1;
+        //baseWidth = 1;
+        //baseHeight = 1;
         icon = null;
         itemData = null;
     }
 
-    public InventoryItem(string itemName, string description, int baseWidth, int baseHeight, Sprite icon = null, ItemData itemData = null)
+    public InventoryItem(string itemName, string description, Sprite icon = null, ItemData itemData = null)
     {
         this.itemName = itemName;
         this.description = description;
         quantity = 1;
-        this.baseWidth = Mathf.Max(1, baseWidth);
-        this.baseHeight = Mathf.Max(1, baseHeight);
+        //this.baseWidth = Mathf.Max(1, baseWidth);
+        //this.baseHeight = Mathf.Max(1, baseHeight);
         this.icon = icon;
         this.itemData = itemData;
     }
@@ -65,8 +65,8 @@ public class InventoryItem
         itemName = other.itemName;
         description = other.description;
         quantity = other.quantity;
-        baseWidth = other.baseWidth;
-        baseHeight = other.baseHeight;
+        //baseWidth = other.baseWidth;
+       // baseHeight = other.baseHeight;
         icon = other.icon;
         itemData = other.itemData;
         IsRotated = other.IsRotated;
@@ -84,7 +84,8 @@ public class InventoryItem
 
     public override string ToString()
     {
-        return $"{itemName} ({Width}x{Height}) - {description}";
+        //return $"{itemName} ({Width}x{Height}) - {description}";
+        return $"{itemName} {description} {itemData.GridPositions.Count} spaces large";
     }
 
     public void AssignInventory(ItemGrid newOwner, Vector2Int[]  newHeldPositions)

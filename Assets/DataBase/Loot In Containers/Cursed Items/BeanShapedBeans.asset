@@ -10,12 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f826a400e115ea1499a600420a039331, type: 3}
-  m_Name: CanBeans
+  m_Name: BeanShapedBeans
   m_EditorClassIdentifier: 
-  itemName: CanBeans
-  _sprite: {fileID: -628033106, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
+  itemName: BeanShapedBeans
+  _sprite: {fileID: 21300000, guid: 9599e808321801b48b7edb78b6fa2b0c, type: 3}
   rarity: 0
   itemType: 1
-  worldItemDefault: {fileID: 66032571329618027, guid: 12799d63943ecdb4eabc8866a6fbb9df, type: 3}
+  worldItemDefault: {fileID: 0}
   _gridPositions:
   - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 0, y: 2}
+  - {x: 1, y: 2}

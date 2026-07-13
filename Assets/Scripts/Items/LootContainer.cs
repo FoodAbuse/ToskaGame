@@ -45,8 +45,8 @@ public class LootContainer : MonoBehaviour, IInteractable
             InventoryItem inventoryItem = new InventoryItem(
                 selectedItem.itemName,
                 selectedItem.rarity.ToString(),
-                selectedItem.width,
-                selectedItem.height,
+                //selectedItem.width,
+                //selectedItem.height,
                 selectedItem.Sprite,
                 selectedItem
             );
@@ -78,6 +78,6 @@ public class LootContainer : MonoBehaviour, IInteractable
             lootUIManager.OpenLoot(this);
         else
         */
-            Debug.LogWarning("LootUIManager not found in scene.");
+           // Debug.LogWarning("LootUIManager not found in scene.");
     }
 }
