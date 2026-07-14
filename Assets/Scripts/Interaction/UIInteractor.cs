@@ -180,72 +180,68 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
 
         if (Input.GetMouseButtonUp(0))
         {
-            //create the world position here if the mouse button dropped it in the world. or into a slot (swapping if necessary). we will do a raycast looking for inventory spaces
-            //
-            foreach (RaycastResult result in results)
+            ResolveItemDrop(results.ToArray());
+            
+
+        }
+    }
+    private void ResolveItemDrop(RaycastResult[] results)
+    {
+        if (results.Length == 0)
+        {
+            // if the results are empty than just do the drop 
+            WorldItem.Drop(transform.position, Quaternion.identity, movingItemData);
+            Destroy(gameObject);
+            InventoryUpdateEvent.Raise();
+            MouserCatch();
+            return;
+        }
+        foreach (RaycastResult result in results)
+        {
+            IReceiver _slot = result.gameObject.GetComponent<IReceiver>(); // check for a component that implements the Reciever interface.
+            if (_slot != null ) // if there is indeed an interactable and it is implementing the reciever interface 
             {
-                IReceiver _slot = result.gameObject.GetComponent<IReceiver>(); // check for a component that implements the Reciever interface.
-                if (_slot != null ) // if there is indeed an interactable and it is implementing the reciever interface 
+                ItemData itemToStore = movingItemData; 
+                if (_slot.Receive(itemToStore, itemOrigin))
                 {
-                    ItemData itemToStore = movingItemData; //
-                    //itemToStore.SetItemData(movingItemData);
-                    if (_slot.Receive(itemToStore, itemOrigin))
-                    {
-                        MouserCatch(); //
-                        Destroy(_itemChild);        //dESTROY tHE cHILD
-                    }
-                    else
-                    {
-                        //slot couldnt take item here. Drop the child
-                        WorldItem.Drop(UIInteractor.Instance.transform.position,Quaternion.identity, itemToStore);
-                        MouserCatch();
-                    }
-                    return;
+                    
+                    MouserCatch(); 
+                    Destroy(_itemChild);
                 }
-                else  // if there is no inventory slot then it goes back to its original slot
+                else
                 {
-                    if (itemOrigin.ItemGridSpace.OwningGrid != null) // we will check that the inventory it came from exists, if so it will attempt to perform an addto method, if it fails we will need to drop the item
-                    {
-                        if (!itemOrigin.ItemGridSpace.AddItem(movingItemData))   // TRY adding the Item to the grid. if it fails then do the drop
-                        {
-                            WorldItem.Drop(transform.position, Quaternion.identity, movingItemData);
-                            Destroy(gameObject);
-                            //this is where the code for dropping an item will go, as otherwise the item will just be destroyed
-                        }
-
-                        InventoryUpdateEvent.Raise();
-                        MouserCatch();
-                    }
-                    else
-                    {
-                        //code needs to go here for dropping the item. since it cant find a slot to go back to it must instead Drop onto the ground as an item, preventing the itemdata being lost completely
-                    }
-
-                    return;
+                    //slot couldnt take item here. Drop the child attempt to Send Item home
+                    WorldItem.Drop(UIInteractor.Instance.transform.position,Quaternion.identity, itemToStore);
+                    MouserCatch();
                 }
-                // if there is no UI at all then it is spawned into the game as an object
+
+                return;
             }
 
-            int layerObject = 6;
-            Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,
-                Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-            RaycastHit2D hit = Physics2D.Raycast(ray, ray, layerObject);
-            if (hit.collider != null)
+            // check if ui was hit but no slot found for object beinng released over Invalid space
+            // if there is no UI at all then it is spawned into the game as an object
+        }
+        
+        // if there was a raycast result  and we got here then we can assume it was released over invalid space.
+        // so try to return to original slot
+        ReturnItemToOrigin();
+        InventoryUpdateEvent.Raise();
+        MouserCatch();
+    }
+
+    private void ReturnItemToOrigin()           // method for attempting to send Item back to its original space
+    {
+        if (itemOrigin.ItemGridSpace.OwningGrid != null)
+        {
+            if (!itemOrigin.ItemGridSpace.AddItem(movingItemData))   // TRY adding the Item to the grid. if it fails then do the drop
             {
-                if (hit.collider.gameObject.GetComponent<IReceiver>() != null)
-                {
-                    InteractableComponent item = hit.collider.gameObject.GetComponent<InteractableComponent>();
-                    if (item.isInteractable == true)
-                    {
-                        //Debug.Log("is interactable!");        // I believe this is old code for the 2d implementation of this script
-                        
-                        //Destroy(hit.collider.gameObject);       // should probably add something to delete its material too since apparently that is left behind as its own thing
-                    }
-                }
+                WorldItem.Drop(transform.position, Quaternion.identity, movingItemData);
             }
-
-            MouserCatch(); //destroy the MouseFollowerGameObject.
-
+        }
+        else
+        {
+            // the owning grid must have been destroyed or passed outta scope. drop the item
+            WorldItem.Drop(UIInteractor.Instance.transform.position, Quaternion.identity, movingItemData);
         }
     }
     public Vector3 ItemCaster()                         // this method will shoot a line out of the camera towards the mouse for item dropping and moving
@@ -265,7 +261,8 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
         return newpos;
     }
     public void MouserCatch()           
-    {                                                                           // this tells the mouser to turn collisions on for the item and then to destroy itself and the ui sprite
+    {                                                                           
+        // this tells the mouser to turn collisions on for the item and then to destroy itself and the ui sprite
         /*Collider[] colls = gameObject.GetComponents<Collider>();
         foreach(Collider col in colls)
         {
@@ -336,50 +333,6 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
         {
             col.enabled = false;
         }
-        // might need to turn off all the colliders and turn them back on. ( disabling the raycast would be better but Icbf)
-        
-        // will need to generate the world Item of the ItemData here
-        /*if (itemData is BobaItemData)
-        {
-            //here we will instead instantiate the boba Item. much like the boba drop script
-            GameObject defaultItem = Resources.Load("DefaultBobaItem") as GameObject; 
-            _itemChild = Instantiate(defaultItem, gameObject.transform);
-            Item _item =_itemChild.GetComponent<Item>();
-            _item.interactRangeVar = interactRange;
-            _item.itemData = itemData;
-        }
-        else if (itemData is CoinData)
-        {
-            // heres where we handle creating an Item that is a coindata
-            GameObject defaultItem = Resources.Load("Coin") as GameObject;
-            _itemChild = Instantiate(defaultItem, gameObject.transform);
-            Item _item = _itemChild.GetComponent<Item>();
-            _item.interactRangeVar = interactRange;
-            _item.itemData = itemData;
-        }
-        else
-    
-            Debug.Log("CreateItemChild");
-            _itemChild =
-                new GameObject("itemChild"); // we need this to be made as a child of this object at its position..... ;
-
-            _itemChild.transform.position =
-                gameObject.transform.position; //we set its position to that of the mouseInteractor
-            _itemChild.transform.SetParent(gameObject.transform);
-            Item _item = _itemChild.AddComponent<Item>();
-            _item.interactRangeVar = interactRange;
-            _item.BuildFromItemData(itemData);  
-        }
-        _itemChild.GetComponent<Rigidbody>().useGravity = false;
-
-        Collider[] colls = _itemChild.GetComponents<Collider>();
-        
-        foreach (Collider col in colls) // mayeb add a istrigger check here if we want the item to collide with things
-        {
-            col.enabled = false;
-        }
-        // might need to turn off all the colliders and turn them back on. ( disabling the raycast would be better but Icbf)
-        
-        */
     }
+
 }

@@ -26,10 +26,16 @@ public class GlobalItemDatabase : ItemDatabase
         {
             if (_globalInstance == null)
             {
-                _globalInstance = ScriptableObject.CreateInstance<GlobalItemDatabase>(); // create Database if its null
-                AssetDatabase.CreateAsset(_globalInstance, "Assets/DataBase/TheDataBase/GlobalItemDataBase.asset");
-                Debug.Log("GlobalItemDataBase.asset created");
-                CollateGlobalDatabase();
+                // first try to recieve the Global Object from the assets
+                _globalInstance = AssetDatabase.LoadAssetAtPath<GlobalItemDatabase>("Assets/Resources/GlobalItemDatabase.asset");
+                if (_globalInstance == null)
+                {
+                    _globalInstance = ScriptableObject.CreateInstance<GlobalItemDatabase>(); // create Database if its null
+                    AssetDatabase.CreateAsset(_globalInstance, "Assets/DataBase/TheDataBase/GlobalItemDataBase.asset");
+                    Debug.Log("GlobalItemDataBase.asset created");
+                    CollateGlobalDatabase();
+                    
+                }
             }
 
             return _globalInstance;
