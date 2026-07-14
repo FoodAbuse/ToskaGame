@@ -5,17 +5,33 @@ using UnityEngine;
 [Serializable]
 public class LootGenerator
 {
+    [SerializeField] private bool usesGlobalItemDatabase;
     [SerializeField] private ItemDatabase itemDatabase;
+
+    private ItemDatabase SelectedItemDatabase
+    {
+        get
+        {
+            if (!usesGlobalItemDatabase)
+            {
+                return itemDatabase;
+            }
+            else
+            {
+                return ItemDatabase.GlobalDatabase;
+            }
+        }
+    }
     [SerializeField] private LootTable lootTable;
     [SerializeField] private LootGeneratorSettings settings;
 
-    public bool HasRequiredData => itemDatabase != null && lootTable != null && settings != null;
+    public bool HasRequiredData => SelectedItemDatabase != null && lootTable != null && settings != null;
 
     public List<ItemData> GenerateLoot()
     {
         List<ItemData> generatedLoot = new List<ItemData>();
 
-        if (itemDatabase == null || lootTable == null || settings == null || itemDatabase.allItems == null)
+        if (itemDatabase == null || lootTable == null || settings == null || itemDatabase.itemList == null)
             return generatedLoot;
 
         int minCount = settings.MinLootCount;
@@ -42,7 +58,7 @@ public class LootGenerator
     private ItemData GetRandomItemByRarity(ItemRarity rarity)
     {
         int matchingCount = 0;
-        foreach (ItemData item in itemDatabase.allItems)
+        foreach (ItemData item in SelectedItemDatabase.itemList)
         {
             if (item != null && item.rarity == rarity && settings.AllowsItemType(item.itemType))
                 matchingCount++;
@@ -54,7 +70,7 @@ public class LootGenerator
         int selectionIndex = UnityEngine.Random.Range(0, matchingCount);
         int currentIndex = 0;
 
-        foreach (ItemData item in itemDatabase.allItems)
+        foreach (ItemData item in SelectedItemDatabase.itemList)
         {
             if (item == null || item.rarity != rarity || !settings.AllowsItemType(item.itemType))
                 continue;
@@ -71,7 +87,7 @@ public class LootGenerator
     private ItemData GetAnyRandomItem()
     {
         int nonNullCount = 0;
-        foreach (ItemData item in itemDatabase.allItems)
+        foreach (ItemData item in SelectedItemDatabase.itemList)
         {
             if (item != null && settings.AllowsItemType(item.itemType))
                 nonNullCount++;
@@ -83,7 +99,7 @@ public class LootGenerator
         int selectionIndex = UnityEngine.Random.Range(0, nonNullCount);
         int currentIndex = 0;
 
-        foreach (ItemData item in itemDatabase.allItems)
+        foreach (ItemData item in SelectedItemDatabase.itemList)
         {
             if (item == null || !settings.AllowsItemType(item.itemType))
                 continue;

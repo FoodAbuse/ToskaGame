@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting.Dependencies.Sqlite;
@@ -48,7 +49,6 @@ public class ItemData : ScriptableObject
    // [Header("Grid Size")]
     //[Min(1)] public int width = 1;
     //[Min(1)] public int height = 1;
-
     [Header("Rarity")]
     public ItemRarity rarity = ItemRarity.Common;
 
@@ -70,6 +70,7 @@ public class ItemData : ScriptableObject
         }
     }// the world representation of this Item
     // here we will have the grid of bools that will represent the Items space in the inventory
+    
     [SerializeField]
     private List<Vector2Int> _gridPositions;
 
@@ -88,7 +89,12 @@ public class ItemData : ScriptableObject
                 return _gridPositions;
             }
         }
-    } // this will track the positions the Item uses in the inventory
+    }
+
+    private void Awake()
+    {
+        ItemDatabase.AddToGlobalDatabase(this);
+    }
 
     public Vector2Int CalculateOriginPoint()
     {
@@ -188,6 +194,13 @@ public class ItemData : ScriptableObject
         
         return lengths;
     }
-    
+
+    private void OnDestroy()
+    {
+        // cleanup code for if the SO is deleted
+        // might need to be changed to OnDisable if we have issues with the ItemData falling out of scope
+        ItemDatabase.RemoveFromGlobalDatabase(this);
+        
+    }
 }
 

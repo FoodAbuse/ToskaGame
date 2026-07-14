@@ -12,7 +12,7 @@ public class LootContainer : MonoBehaviour, IInteractable
     
     public InventoryTemplate inventoryTemplate;
 
-
+    
     [Header("Loot Generation")]
     [SerializeField] private LootGenerator lootGenerator = new LootGenerator();
 
