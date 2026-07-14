@@ -18,7 +18,7 @@ public class LootGenerator
             }
             else
             {
-                return ItemDatabase.GlobalDatabase;
+                return GlobalItemDatabase.GlobalDatabase;
             }
         }
     }

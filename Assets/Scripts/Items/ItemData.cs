@@ -93,7 +93,7 @@ public class ItemData : ScriptableObject
 
     private void Awake()
     {
-        ItemDatabase.AddToGlobalDatabase(this);
+        GlobalItemDatabase.AddToGlobalDatabase(this);
     }
 
     public Vector2Int CalculateOriginPoint()
@@ -199,7 +199,7 @@ public class ItemData : ScriptableObject
     {
         // cleanup code for if the SO is deleted
         // might need to be changed to OnDisable if we have issues with the ItemData falling out of scope
-        ItemDatabase.RemoveFromGlobalDatabase(this);
+        GlobalItemDatabase.RemoveFromGlobalDatabase(this);
         
     }
 }
