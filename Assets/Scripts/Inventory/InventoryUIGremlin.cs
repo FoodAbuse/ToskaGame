@@ -127,14 +127,17 @@ public class InventoryUIGremlin : UIReporter
         _slotsParent.transform.SetParent(InventoryPanel.transform,false);
         _itemsParent = new GameObject("Items Parent");
         _itemsParent.transform.SetParent(_slotsParent.transform,false);
-        _slotsParent.AddComponent<RectTransform>().sizeDelta = 
-            ipRect.sizeDelta - new Vector2(paddingWidth , paddingHeight); 
+        RectTransform slotParentRect = _slotsParent.AddComponent<RectTransform>(); 
+            slotParentRect.sizeDelta = ipRect.sizeDelta - new Vector2(paddingWidth , paddingHeight); 
         //size the SlotsParent to be the size of the panel minus the padding (which shouldnt have been scaled)
         RectTransform itemsParentRect = _itemsParent.AddComponent<RectTransform>();
         itemsParentRect.anchorMax = new Vector2(0, 1);
         itemsParentRect.anchorMin = new Vector2(0, 1);
         itemsParentRect.SetAsLastSibling();
         
+        slotParentRect.anchoredPosition = 
+            new Vector2(slotParentRect.anchoredPosition.x 
+                        + GridXOffset,slotParentRect.anchoredPosition.y +  GridYOffset); 
 
         Vector2Int gridslotCount = inventoryGrid.GetGridSize();
         
@@ -142,7 +145,7 @@ public class InventoryUIGremlin : UIReporter
         Vector3[] v = new Vector3[4];
         ipRect.GetWorldCorners(v);
         Vector2 targetPos = new Vector2(-(slotOffset.x*gridslotCount.x)/2,slotOffset.y * gridslotCount.y /2);
-        targetPos = new Vector2(targetPos.x + GridXOffset,targetPos.y + GridYOffset);
+        //targetPos = new Vector2(targetPos.x + GridXOffset,targetPos.y + GridYOffset);
         //lets get size of the Panel. then place cubes in it
         float originalXOffset = targetPos.x; // so we can reset the offset each loop.
         // now we instantiate at every position
