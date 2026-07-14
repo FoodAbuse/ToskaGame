@@ -19,6 +19,9 @@ public class InventoryUIGremlin : UIReporter
     public GameObject InventorySlotPrefab;
     public float paddingWidth;
     public float paddingHeight;
+    public float GridXOffset; // this is for offsetting the grid in the  space of the panel
+    public float GridYOffset; // this is for offsetting the drawing of the grid
+    
     private ItemGrid _itemGrid;
     private Vector2 _screenOffset;
 
@@ -138,8 +141,8 @@ public class InventoryUIGremlin : UIReporter
         Vector2 slotOffset = slotFabRect.rect.size;
         Vector3[] v = new Vector3[4];
         ipRect.GetWorldCorners(v);
-        Vector2 targetPos = new Vector2(-(slotOffset.x*gridslotCount.x)/2,slotOffset.y * gridslotCount.y /2);//new Vector2(v[1].x + slotOffset.x, v[1].y + slotOffset.y);
-        
+        Vector2 targetPos = new Vector2(-(slotOffset.x*gridslotCount.x)/2,slotOffset.y * gridslotCount.y /2);
+        targetPos = new Vector2(targetPos.x + GridXOffset,targetPos.y + GridYOffset);
         //lets get size of the Panel. then place cubes in it
         float originalXOffset = targetPos.x; // so we can reset the offset each loop.
         // now we instantiate at every position
