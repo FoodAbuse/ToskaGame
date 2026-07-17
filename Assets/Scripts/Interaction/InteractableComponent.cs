@@ -46,7 +46,7 @@ public interface IReceiver
 
 {
 
-    bool Receive(ItemData input, ItemGridSpaceInteractable component);
+    bool Receive(InventoryItem input, ItemGridSpaceInteractable component);
 }
 public interface IReceiveable
 {

@@ -101,10 +101,21 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
     Rigidbody _rbd;
     public static GameEvent InventoryUpdateEvent; //= UISystem.UpdateInventoryUI;
     public UIRuntimeSet UIReporterRuntimeSet;
-    public ItemData movingItemData;
+
+    public ItemData movingItemData
+    {
+        get
+        {
+            return movingItem.itemData;
+        }
+    }
+
+    public InventoryItem movingItem;
     private FloatVariable interactRange{get{return UIInteractor.Instance.interactRange;}} // writing this just so I dont have to rewrite more later
     protected GameObject _itemChild;
     protected GameObject _spriteChild;
+
+    public Vector2 mouseOffset;
     
 
     public ItemGridSpaceInteractable
@@ -167,8 +178,9 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
             {
                 _itemChild.SetActive(false);
             } //set the meshRenderer to be off. this wont work with slime Objects
-            
-            _spriteChild.transform.position = Input.mousePosition; // tells the moving bject to be where the mouse is
+
+            _spriteChild.transform.position =
+                new Vector2(Input.mousePosition.x + mouseOffset.x, Input.mousePosition.y + mouseOffset.y);
         }
         else
         {
@@ -201,7 +213,7 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
             IReceiver _slot = result.gameObject.GetComponent<IReceiver>(); // check for a component that implements the Reciever interface.
             if (_slot != null ) // if there is indeed an interactable and it is implementing the reciever interface 
             {
-                ItemData itemToStore = movingItemData; 
+                InventoryItem itemToStore = movingItem; 
                 if (_slot.Receive(itemToStore, itemOrigin))
                 {
                     
@@ -211,7 +223,7 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
                 else
                 {
                     //slot couldnt take item here. Drop the child attempt to Send Item home
-                    WorldItem.Drop(UIInteractor.Instance.transform.position,Quaternion.identity, itemToStore);
+                    WorldItem.Drop(UIInteractor.Instance.transform.position,Quaternion.identity, itemToStore.itemData);
                     MouserCatch();
                 }
 
@@ -286,7 +298,7 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
         Destroy(gameObject);                 
         
     }
-    public void MouserChase()
+    /*public void MouserChase()
     {
         _rbd.useGravity = false;        // sets the rigidbody to not use gravity. this is so it doesnt build up speed while being held in place
         //MouseInteractor.instance.isHolding = true;  // we set this here but Im not sure it ever gets used yet? must be so that the mouse can be told not interact with other stuff
@@ -300,19 +312,24 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
         {
             col.enabled = false;
         }
-    }
+    } */
 
-    public void CreateSpriteChild(ItemData itemData)
+    public void CreateSpriteChild(InventoryItem item)
     {   
         spriteCanvas = new GameObject("spriteCanvas",typeof(Canvas)); // here we create a new Gameobject with a canvas that will become the parent of the sprite holder
         spriteCanvas.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceCamera;
         spriteCanvas.GetComponent<Canvas>().sortingOrder = 1000;        //sets the canvas really high on the sorting order so it renders over everything else
         _spriteHolder = new GameObject("spriteHolder");
         Image image = _spriteHolder.AddComponent<Image>();
-        _spriteHolder.AddComponent<CanvasRenderer>();
+        //_spriteHolder.AddComponent<CanvasRenderer>();
+        RectTransform rectTransform = _spriteHolder.GetComponent<RectTransform>();
+        rectTransform.sizeDelta = item.DraggingScale;
+        mouseOffset = new Vector2(item.ScreenPos.x - Input.mousePosition.x, item.ScreenPos.y- Input.mousePosition.y);
+        Debug.Log("mouseOffset = "  + mouseOffset);
         _spriteHolder.transform.SetParent(spriteCanvas.transform);
+        rectTransform.pivot = new Vector2(0, 1);
         image.raycastTarget = false;
-        image.sprite = itemData.Sprite;
+        image.sprite = item.itemData.Sprite;
         _spriteChild = _spriteHolder;
     }
 

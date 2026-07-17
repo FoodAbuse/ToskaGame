@@ -266,7 +266,7 @@ public class InventoryUIGremlin : UIReporter
         {
             //now we create the item to display.
             //Vector2Int offset = space.Key - space.Value.heldItem.itemData.CalculateOriginPoint();
-            Vector2Int localOrigin = ItemData.CalculateOriginPoint(t.HoldingGridPositions.ToArray());
+            Vector2Int localOrigin = ItemData.CalculateOriginPoint(t.LocalGridPositions.ToArray());
             Vector3 targetPos = GridSpaceInteractables[_itemGrid.GridSpaces[localOrigin]].gameObject.GetComponent<RectTransform>().anchoredPosition;
             DisplayItem (t, targetPos);
         }
@@ -288,18 +288,20 @@ public class InventoryUIGremlin : UIReporter
         rect.pivot = new Vector2(0, 1);
         Vector2 spaceSizeDelta = InventorySlotPrefab.GetComponent<RectTransform>().sizeDelta;
         
-        rect.sizeDelta = ToskaUtilities.GetRectSizeFromGridSpaces(itemToDisplay.HoldingGridPositions.ToArray())*spaceSizeDelta;
-        
-        Vector2 worldOrientated = ToskaUtilities.GetGridSpaceCorner(itemToDisplay.HoldingGridPositions.ToArray()) *spaceSizeDelta;
+        rect.sizeDelta = ToskaUtilities.GetRectSizeFromGridSpaces(itemToDisplay.LocalGridPositions.ToArray())*spaceSizeDelta;
+        itemToDisplay.DraggingScale = rect.sizeDelta;
+        Vector2 worldOrientated = ToskaUtilities.GetGridSpaceCorner(itemToDisplay.LocalGridPositions.ToArray()) *spaceSizeDelta;
         Vector2 gridOrientated = new Vector2(worldOrientated.x, -worldOrientated.y);
         rect.anchoredPosition = gridOrientated;
-        Debug.Log(" the returned pivot is:"  + rect.pivot + " the slots size is "+ InventorySlotPrefab.GetComponent<RectTransform>().sizeDelta);
+        itemToDisplay.ScreenPos = rect.position;
+        
+
         
 
         //newUIImage.GetComponent<RectTransform>().anchoredPosition = targetPos;
         UIItemSpriteGremlin spriteGremlin = newUIImage.AddComponent<UIItemSpriteGremlin>();
         HeldItemSprites.Add(itemToDisplay, spriteGremlin);
-        spriteGremlin.ItemPositions = new List<Vector2Int>(itemToDisplay.HoldingGridPositions);
+        spriteGremlin.ItemPositions = new List<Vector2Int>(itemToDisplay.LocalGridPositions);
         
     }
     // This class handles the reference of the Inventory panel under the canvas.

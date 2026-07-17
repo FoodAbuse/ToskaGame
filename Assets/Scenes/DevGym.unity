@@ -263,6 +263,7 @@ MonoBehaviour:
   hasGeneratedLoot: 0
   inventoryTemplate: {fileID: 11400000, guid: f8a4f7cc2d5e0b343acaba9784a2a093, type: 2}
   lootGenerator:
+    usesGlobalItemDatabase: 0
     itemDatabase: {fileID: 11400000, guid: 6cec8c60cb8decc4d98799d3b805fad3, type: 2}
     lootTable: {fileID: 11400000, guid: edb6f7f51074d5546bb7e3e8a869dd8f, type: 2}
     settings: {fileID: 11400000, guid: e4887f2e565714145ab31ca036efde80, type: 2}
@@ -1245,6 +1246,7 @@ MonoBehaviour:
   hasGeneratedLoot: 0
   inventoryTemplate: {fileID: 11400000, guid: f8a4f7cc2d5e0b343acaba9784a2a093, type: 2}
   lootGenerator:
+    usesGlobalItemDatabase: 1
     itemDatabase: {fileID: 11400000, guid: 1c559688b0816774eb8ac87e24f3fd71, type: 2}
     lootTable: {fileID: 11400000, guid: edb6f7f51074d5546bb7e3e8a869dd8f, type: 2}
     settings: {fileID: 11400000, guid: a148cd7b2abf0f047a45ffc8233ad8d0, type: 2}

@@ -76,6 +76,10 @@ public class ItemGridSpace :GridSpace
     {
         return owningItemGrid.AddItemAtSpace(incomingData,GridPosition);
     }
+    public bool AddItem(InventoryItem incomingItem)    // this adds an Item to this space and tells the owning inventory to update matching spaces to also be filled as necessary
+    {
+        return owningItemGrid.AddItemAtSpace(incomingItem,GridPosition);
+    }
 
     public bool AttemptAddItemToSpace()
     {
