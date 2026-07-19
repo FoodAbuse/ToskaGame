@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EventReporter : MonoBehaviour
+namespace Utility.GameEvents
 {
-    // Start is called before the first frame update
-    public EventOnEmptyRuntimeSet runtimeSet;
-    void OnEnable()
+    public class EventReporter : MonoBehaviour
     {
-        runtimeSet.AddReporter(this);
-    }
-    void OnDisable()
-    {
-        runtimeSet.RemoveReporter(this);
+        // Start is called before the first frame update
+        public EventOnEmptyRuntimeSet runtimeSet;
+        void OnEnable()
+        {
+            runtimeSet.AddReporter(this);
+        }
+        void OnDisable()
+        {
+            runtimeSet.RemoveReporter(this);
+        }
     }
 }

@@ -7,6 +7,8 @@ using UnityEngine;
 using Grids;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using Utility;
+using Utility.GameEvents;
 using Debug = UnityEngine.Debug;
 
 public class InventoryUIGremlin : UIReporter

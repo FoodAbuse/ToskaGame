@@ -12,14 +12,12 @@ public class UIInteractor : MonoBehaviour
     private static UIInteractor _instance;
 
     private bool _isHolding = false; // should be used and checked to see if the cursor is dragging an object
-    public bool IsHolding{get{return _isHolding;}}
+    public bool IsHolding => _isHolding;
     public FloatVariable interactRange;
-    public float InteractRange{get{return interactRange.Value;}}
+    public float InteractRange => interactRange.Value;
 
-    public static UIInteractor Instance
-    {
-        get { return _instance; }
-    }
+
+    public static UIInteractor Instance => _instance;
 
     public void SetHoldingStatus(bool status)
     {
@@ -102,21 +100,44 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
     public static GameEvent InventoryUpdateEvent; //= UISystem.UpdateInventoryUI;
     public UIRuntimeSet UIReporterRuntimeSet;
 
-    public ItemData movingItemData
-    {
-        get
-        {
-            return movingItem.itemData;
-        }
-    }
+    public ItemData movingItemData => movingItem.itemData;
 
     public InventoryItem movingItem;
-    private FloatVariable interactRange{get{return UIInteractor.Instance.interactRange;}} // writing this just so I dont have to rewrite more later
+    private FloatVariable interactRange => UIInteractor.Instance.interactRange; // writing this just so I dont have to rewrite more later
     protected GameObject _itemChild;
     protected GameObject _spriteChild;
 
     public Vector2 mouseOffset;
-    
+    public CartesianAxes currentRotation = CartesianAxes.DownRight;
+   
+    public Vector2 CurrentMouseOffset
+    {
+        get
+        {
+            float reflectedX = 0;
+            float reflectedY = 0;
+            Vector2 adjustedVector2 = mouseOffset;
+            switch(currentRotation)
+            {
+                case CartesianAxes.DownRight:
+                    
+                    adjustedVector2 =  mouseOffset; // or +x + y
+                    break;
+                case CartesianAxes.DownLeft:
+
+                    adjustedVector2 = new Vector2(mouseOffset.y, -mouseOffset.x);
+                    break;
+                case CartesianAxes.UpLeft:
+                    adjustedVector2 = new Vector2(-mouseOffset.x, -mouseOffset.y);
+                    break;
+                case CartesianAxes.UpRight:
+                    adjustedVector2 = new Vector2(-mouseOffset.y, mouseOffset.x);
+                    break;
+            }
+            return adjustedVector2;
+        }
+        set => mouseOffset = value;
+    }
 
     public ItemGridSpaceInteractable
         itemOrigin
@@ -150,6 +171,15 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            RotateRight();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            RotateLeft();
+        }
         _pointerEventData = new PointerEventData(_eventSystem);
         _pointerEventData.position =
             Input.mousePosition; // grab the position of the mouse and shove it onto the PointerEventData
@@ -180,7 +210,7 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
             } //set the meshRenderer to be off. this wont work with slime Objects
 
             _spriteChild.transform.position =
-                new Vector2(Input.mousePosition.x + mouseOffset.x, Input.mousePosition.y + mouseOffset.y);
+                new Vector2(Input.mousePosition.x + CurrentMouseOffset.x, Input.mousePosition.y + CurrentMouseOffset.y);
         }
         else
         {
@@ -241,6 +271,17 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
         MouserCatch();
     }
 
+    public void RotateLeft()
+    {
+       currentRotation=currentRotation.DecrementClockwise();
+       _spriteChild.transform.Rotate(0,0,90); 
+    }
+
+    public void RotateRight()
+    {
+        //currentRotation =currentRotation.IncrementClockwise();
+        //_spriteChild.transform.Rotate(0,0,90); 
+    }
     private void ReturnItemToOrigin()           // method for attempting to send Item back to its original space
     {
         if (itemOrigin.ItemGridSpace.OwningGrid != null)
@@ -324,10 +365,10 @@ public class MouseFollower : MonoBehaviour // this is the class for making an it
         //_spriteHolder.AddComponent<CanvasRenderer>();
         RectTransform rectTransform = _spriteHolder.GetComponent<RectTransform>();
         rectTransform.sizeDelta = item.DraggingScale;
+        rectTransform.pivot = new Vector2(0,1);
         mouseOffset = new Vector2(item.ScreenPos.x - Input.mousePosition.x, item.ScreenPos.y- Input.mousePosition.y);
         Debug.Log("mouseOffset = "  + mouseOffset);
         _spriteHolder.transform.SetParent(spriteCanvas.transform);
-        rectTransform.pivot = new Vector2(0, 1);
         image.raycastTarget = false;
         image.sprite = item.itemData.Sprite;
         _spriteChild = _spriteHolder;
