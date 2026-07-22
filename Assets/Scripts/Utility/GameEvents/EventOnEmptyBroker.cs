@@ -1,34 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EventOnEmptyBroker : EventReporter
+namespace Utility.GameEvents
 {
-    // this subscribes to a runtime set but only when its method is called. this means it can be added at runtime.
-    // and then have its chosen script called
-
-    public void Register()
+    public class EventOnEmptyBroker : EventReporter
     {
-        if (runtimeSet != null)
-            runtimeSet.AddReporter(this);
-    }
+        // this subscribes to a runtime set but only when its method is called. this means it can be added at runtime.
+        // and then have its chosen script called
 
-    public void Unregister()
-    {
-        if(runtimeSet != null)
-            runtimeSet.RemoveReporter(this);
-    }
+        public void Register()
+        {
+            if (runtimeSet != null)
+                runtimeSet.AddReporter(this);
+        }
 
-    private void OnEnable() // this should be found before the parent classes OnEnalbe
-    {
-        Debug.Log("EventBroker enabled");
-    }
+        public void Unregister()
+        {
+            if(runtimeSet != null)
+                runtimeSet.RemoveReporter(this);
+        }
 
-    private void OnDisable() //this should be found before the parent classes
-    {
+        private void OnEnable() // this should be found before the parent classes OnEnalbe
+        {
+            Debug.Log("EventBroker enabled");
+        }
+
+        private void OnDisable() //this should be found before the parent classes
+        {
         
-    }
-    // this is a component that contains methods to unsubscribe and resubscribe to its held event
-    // its mostly to be used as a middle man between Pixelcrusher event calls and regular ITem system calls
+        }
+        // this is a component that contains methods to unsubscribe and resubscribe to its held event
+        // its mostly to be used as a middle man between Pixelcrusher event calls and regular ITem system calls
     
+    }
 }

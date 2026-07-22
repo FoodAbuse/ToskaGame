@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class UIRuntimeSet : RuntimeSet<UIReporter>
+namespace Utility
 {
+    public class UIRuntimeSet : RuntimeSet<UIReporter>
+    {
     
     
 
+    }
 }

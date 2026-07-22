@@ -14,7 +14,7 @@ public class ItemGridSpaceInteractable : InteractableComponent, IReceiver
 
     private float InteractRange => UIInteractor.Instance.InteractRange;
 
-    private ItemData heldItem => ItemGridSpace.heldItem.itemData;
+    private InventoryItem heldItem => ItemGridSpace.heldItem;
 
     public override void Interact()
     {
@@ -22,23 +22,28 @@ public class ItemGridSpaceInteractable : InteractableComponent, IReceiver
         {
             var mouserItem = new GameObject();
             var mouser = mouserItem.AddComponent<MouseFollower>();
+            
+            
             //mouser.interactRange = InteractRange; changed Mousers to refer to UIInteractors interact range
-            mouser.movingItemData = heldItem;
+            mouser.movingItem = heldItem;
             mouser.CreateSpriteChild(heldItem);
-            mouser.CreateItemChild(heldItem);
+            mouser.CreateItemChild(heldItem.itemData);
             mouser.itemOrigin = this;
+
+            heldItem.SetPivot(ItemGridSpace.GridPosition);
             //then we gotta clear the slot
+            // maybe here we can figure out what slot of the items pattern this corresponds to
             ClearItem();
         }
         Debug.Log(ItemGridSpace.GridPosition);
     }
 
-    public bool Receive(ItemData itemData, ItemGridSpaceInteractable origin)
+    public bool Receive(InventoryItem item, ItemGridSpaceInteractable origin)
     {
         // this will be called when the Object is recieve
         //origin is the component the Itemdata came from I guess. 
-        Debug.Log( "Recieving" + itemData.itemName);
-        return ItemGridSpace.AddItem(itemData);
+        Debug.Log( "Recieving" + item.itemData.itemName);
+        return ItemGridSpace.AddItem(item);
     }
 
     public void SetItemGridSpace(ItemGridSpace itemGridSpace)

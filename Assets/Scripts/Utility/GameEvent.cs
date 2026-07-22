@@ -1,14 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Utility.GameEvents;
 
-
-
-[CreateAssetMenu(menuName = "GameEvents/GameEvent")]
-public class GameEvent : ScriptableObject
+namespace Utility
 {
-    protected List<GameEventListener> listeners =
-        new List<GameEventListener>();
+    [CreateAssetMenu(menuName = "GameEvents/GameEvent")]
+    public class GameEvent : ScriptableObject
+    {
+        protected List<GameEventListener> listeners =
+            new List<GameEventListener>();
         public void Raise()
         {
             for(int i = listeners.Count -1; i >= 0; i--)
@@ -22,4 +22,5 @@ public class GameEvent : ScriptableObject
         {
             listeners.Remove(listener);
         }
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Utility;
 
 namespace Grids
 {
@@ -91,7 +92,7 @@ namespace Grids
                             space.heldItem = newPlacedItem;
                             updatedGridPositions.Add(localSpaceCoords);
                         }
-                        newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray());
+                        newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray(),incomingData.GridPositions.ToArray());
 
                         UISystem.UpdateInventoryUI.Raise();
                         return true;
@@ -100,7 +101,56 @@ namespace Grids
             UISystem.UpdateInventoryUI.Raise();
             return false; // remove this when code is written
         }
+        public bool AddItemAtSpace(InventoryItem incomingItem, Vector2Int targetCoordinates)
+        {
+            // this is used to attempt to add an Item to a specific Space in an inventory
+            Vector2Int OriginCoords = incomingItem.PivotPosition;
+            //check if the Chosen space is empty or not
+            if(ItemGridSpaces.ContainsKey(targetCoordinates))        //should always be true but perhaps in the future spaces can be rearranged
+                if (ItemGridSpaces[targetCoordinates].heldItem == null)  //check its empty, 
+                {
+                    //then we check the spaces around the space can fit it
+                    Vector2Int Offset = targetCoordinates - OriginCoords;
+                    bool spacesValid = true;
+                    foreach (Vector2Int checkedSpace in incomingItem.itemData.GridPositions)
+                    {
+                        Vector2Int checkedSpaceCoordinates = checkedSpace + Offset;   //apply offset to get actual space in grid
+                        if (ItemGridSpaces.ContainsKey(checkedSpaceCoordinates) ) // check that coord exists on grid
+                        {
+                            // if it does. grab its value as an ItemGridSpace
+                            ItemGridSpace space = ItemGridSpaces[checkedSpaceCoordinates] ;
+                            //check if it has a held item
+                            if (space.heldItem != null)
+                            {
+                                spacesValid = false;
+                            }
+                        }
+                        else
+                        {
+                            spacesValid = false;
+                        }
+                    }
 
+                    if (spacesValid)
+                    {
+                        InventoryItem newPlacedItem = incomingItem;
+                        List<Vector2Int> updatedGridPositions = new List<Vector2Int>();
+                        foreach (Vector2Int spaceCoord in incomingItem.itemData.GridPositions)
+                        {
+                            Vector2Int localSpaceCoords = spaceCoord + Offset;
+                            ItemGridSpace space = ItemGridSpaces[localSpaceCoords];
+                            space.heldItem = newPlacedItem;
+                            updatedGridPositions.Add(localSpaceCoords);
+                        }
+                        newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray(),incomingItem.itemData.GridPositions.ToArray());
+
+                        UISystem.UpdateInventoryUI.Raise();
+                        return true;
+                    }
+                }
+            UISystem.UpdateInventoryUI.Raise();
+            return false; // remove this when code is written
+        }
         public bool AddItemToGrid(ItemData incomingData)
         {
             Vector2Int OriginCoords = incomingData.CalculateOriginPoint();
@@ -144,6 +194,9 @@ namespace Grids
                         // here we place the item into the item grid
                         // we go to each of the positions
                         // create an Inventory Item and tell each position that it is their item
+                        // we also Match the ItemDatas gridpositions to the inventories. this saves us the 
+                        // pain of calculating it later based on grid size and where the mouse clicked
+                        
                         InventoryItem newPlacedItem = new InventoryItem(incomingData);
                     
                         List<Vector2Int> updatedGridPositions = new List<Vector2Int>();
@@ -154,8 +207,7 @@ namespace Grids
                             space.heldItem = newPlacedItem;
                             updatedGridPositions.Add(localSpaceCoords);
                         }
-                        newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray());
-                        Debug.Log("return True");
+                        newPlacedItem.AssignInventory(this, updatedGridPositions.ToArray(),incomingData.GridPositions.ToArray());
                         UISystem.UpdateInventoryUI.Raise();
                         return true;
                     }
