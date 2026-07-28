@@ -99,9 +99,9 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Name
-      value: OpenGate
+      value: Open the gate to the woods
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Pictures
       value: '[]'
       type: 3
@@ -109,19 +109,19 @@ MonoBehaviour:
     - title: Description
       value: I want to get to the woods but the gate is locked. Let's find the key.
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Success Description
       value: I found the key to the gate to the woods.
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Failure Description
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: State
       value: unassigned
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Is Item
       value: False
       type: 2
@@ -141,11 +141,11 @@ MonoBehaviour:
     - title: Entry 1 State
       value: active
       type: 0
-      typeString: 
+      typeString: CustomFieldType_QuestState
     - title: Entry 1
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
   locations: []
   variables:
   - id: 1
