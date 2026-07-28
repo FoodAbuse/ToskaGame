@@ -140,7 +140,7 @@ public class GameObjectTransformer : MonoBehaviour
             if (yRotation > 0)
             {
                 float ystep = yRotation - yangleRotated; 
-                ystep = Mathf.Clamp(ystep,0, transformRotationSpeed);
+                ystep = Mathf.Clamp(ystep,0, transformRotationSpeed* Time.deltaTime);
                 transform.RotateAround(target.position, Vector3.up, ystep);
                 yangleRotated += ystep;
             }
@@ -155,7 +155,7 @@ public class GameObjectTransformer : MonoBehaviour
             if (zRotation > 0)
             {
                 float zstep = zRotation - zangleRotated;
-                zstep = Mathf.Clamp(zstep, 0, transformRotationSpeed);
+                zstep = Mathf.Clamp(zstep, 0, transformRotationSpeed* Time.deltaTime);
                 transform.RotateAround(target.position, Vector3.forward, zstep);
                 zangleRotated += zstep;                
             }
