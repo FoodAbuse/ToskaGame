@@ -55,16 +55,23 @@ public class TheInteractionController : MonoBehaviour
             if (ignorePlayerColliders && IsSelfCollider(hit.collider))
                 continue;
 
-            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+            IInteractable[] interactable = hit.collider.GetComponents<IInteractable>();
+            
             if (interactable == null)
             {
-                interactable = hit.collider.GetComponentInParent<IInteractable>();
+                interactable = hit.collider.GetComponentsInParent<IInteractable>();
             }
-            if (interactable != null)
+            if (interactable.Length > 0 )
             {
-                currentInteractable = interactable;
-                TryHighlight(hit.collider.gameObject);
-                break;
+                foreach (IInteractable i in interactable)
+                {
+                    if (i.IsInteractable())
+                    {
+                        currentInteractable = i;
+                        TryHighlight(hit.collider.gameObject);
+                        break;
+                    }
+                }
             }
         }
     }
@@ -76,7 +83,13 @@ public class TheInteractionController : MonoBehaviour
 
         if (Input.GetKeyDown(interactKey))
         {
-            currentInteractable.Interact();
+            // check if current interactable is of extended type
+            if (currentInteractable is IInteractableExtended castInteractable)
+            {
+                castInteractable.Interact(gameObject);
+            }
+            else
+                currentInteractable.Interact();
         }
     }
 

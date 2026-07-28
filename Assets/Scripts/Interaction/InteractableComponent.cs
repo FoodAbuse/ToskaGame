@@ -6,9 +6,7 @@ public class InteractableComponent : MonoBehaviour, IInteractableExtended
 {
     // might be able to change this to instead sit on the player and have it check objects that it walks over
     [HideInInspector]
-    public bool isInteractable;
-
-    public bool disableInteraction = false;
+    public bool isInteractable = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,7 +37,17 @@ public class InteractableComponent : MonoBehaviour, IInteractableExtended
 
     public void DisableInteraction()
     {
-        disableInteraction = true;
+        isInteractable = false;
+    }
+
+    public void EnableInteraction()
+    {
+        isInteractable = true;
+    }
+
+    public bool IsInteractable()
+    {
+        return isInteractable;
     }
 }
 public interface IReceiver
