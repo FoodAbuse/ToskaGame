@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935899b62f48ae5498594680ed17d133, type: 3}
-  m_Name: Dialogue Database 01
+  m_Name: Dialogue Database 01 (Auto-Backup)
   m_EditorClassIdentifier: 
   version: 
   author: 
@@ -70,13 +70,13 @@ MonoBehaviour:
       type: 0
       typeString: CustomFieldType_Text
     portrait: {fileID: 0}
-    spritePortrait: {fileID: 21300000, guid: 7563338db4d6be14e8c239b850912109, type: 3}
+    spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
   - id: 2
     fields:
     - title: Name
-      value: Gate
+      value: Other
       type: 0
       typeString: 
     - title: Pictures
@@ -95,57 +95,7 @@ MonoBehaviour:
     spritePortrait: {fileID: 0}
     alternatePortraits: []
     spritePortraits: []
-  items:
-  - id: 1
-    fields:
-    - title: Name
-      value: OpenGate
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: I want to get to the woods but the gate is locked. Let's find the key.
-      type: 0
-      typeString: 
-    - title: Success Description
-      value: I found the key to the gate to the woods.
-      type: 0
-      typeString: 
-    - title: Failure Description
-      value: 
-      type: 0
-      typeString: 
-    - title: State
-      value: unassigned
-      type: 0
-      typeString: 
-    - title: Is Item
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Trackable
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Track
-      value: True
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Entry Count
-      value: 1
-      type: 1
-      typeString: CustomFieldType_Number
-    - title: Entry 1 State
-      value: active
-      type: 0
-      typeString: 
-    - title: Entry 1
-      value: 
-      type: 0
-      typeString: 
+  items: []
   locations: []
   variables:
   - id: 1
@@ -293,7 +243,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: The gate is locked!
+        value: The gate is locked. I should look around for a key.
         type: 0
         typeString: 
       - title: Sequence
@@ -307,15 +257,8 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 1
-        originDialogueID: 1
-        destinationConversationID: 1
-        destinationDialogueID: 5
-        isConnector: 0
-        priority: 2
-      conditionsString: Variable["gateKey"] == false and (CurrentQuestState("OpenGate")
-        == "unassigned")
+      outgoingLinks: []
+      conditionsString: Variable["gateKey"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -426,68 +369,13 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestState("OpenGate", "success");
-
-        ShowAlert("Success!
-        I opened the gate.")'
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 257
-        y: 163
-        width: 160
-        height: 30
-    - id: 5
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: I'll try to find a key.
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 1
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: 
-      userScript: 'SetQuestState("OpenGate", "active");
-
-        ShowAlert("To do:
-        find the key for the gate")'
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 76
         y: 163
         width: 160
         height: 30
@@ -623,10 +511,6 @@ MonoBehaviour:
         typeString: 
       - title: Sequence
         value: 
-        type: 0
-        typeString: 
-      - title: EventGuid
-        value: c9bfb901-a732-4210-bbb8-fe3fb33875e7
         type: 0
         typeString: 
       conversationID: 2
