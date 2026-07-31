@@ -99,7 +99,7 @@ MonoBehaviour:
   - id: 1
     fields:
     - title: Name
-      value: Open the gate to the woods
+      value: Open the Gate
       type: 0
       typeString: CustomFieldType_Text
     - title: Pictures
@@ -314,8 +314,8 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
-      conditionsString: Variable["gateKey"] == false and (CurrentQuestState("OpenGate")
-        == "unassigned")
+      conditionsString: Variable["gateKey"] == false and (CurrentQuestState("Open
+        the Gate") == "unassigned")
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -426,7 +426,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestState("OpenGate", "success");
+      userScript: 'SetQuestState("Open the Gate", "success");
 
         ShowAlert("Success!
         I opened the gate.")'
@@ -478,10 +478,10 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 'SetQuestState("OpenGate", "active");
+      userScript: 'SetQuestState("Open the Gate", "active");
 
-        ShowAlert("To do:
-        find the key for the gate")'
+        ShowAlert("To
+        do: find the key for the gate")'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -492,7 +492,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 4, y: 0}
     canvasZoom: 1
   - id: 2
     fields:
