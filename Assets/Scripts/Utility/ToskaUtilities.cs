@@ -34,7 +34,7 @@ namespace Utility
             }
             return centre/vectors.Length;
         }
-        public static (bool, T) TestReturnComponent<T>(GameObject gameObject) where T : Component
+        public static (bool, T) TestReturnComponent<T>(GameObject gameObject) where T : Component 
         {
             T component = gameObject.GetComponent<T>();
             if (component != null)
