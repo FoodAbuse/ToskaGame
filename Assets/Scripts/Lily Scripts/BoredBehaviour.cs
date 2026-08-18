@@ -17,41 +17,33 @@ public class BoredBehaviour : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        ResetIdle();
+        ResetIdle(animator);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (_isBored == false)
-        {
-            _idleTime += Time.deltaTime;
-
-            if (_idleTime > _timeUntilBored && stateInfo.normalizedTime % 1 < 0.02f) 
+            if (_isBored == false)
             {
-                _isBored = true;
-                _boredAnimation = Random.Range(1, _numberOfBoredAnimations + 1);
-                _boredAnimation = _boredAnimation * 2 - 1;
+                _idleTime += Time.deltaTime;
 
-                animator.SetFloat("BoredAnimation", _boredAnimation - 1);
+                if (_idleTime > _timeUntilBored)
+                {
+                    _isBored = true;
+                    int boredAnimation = Random.Range(1, _numberOfBoredAnimations +1);
+                    animator.SetFloat("BoredAnimation", boredAnimation);
+
+                }
             }
-        }
-        else if (stateInfo.normalizedTime % 1 > 0.98)
-        {
-            ResetIdle();
-        }
-
-        animator.SetFloat("BoredAnimation", _boredAnimation, 0.2f, Time.deltaTime);
+            else if (stateInfo.normalizedTime % 1 > 0.98)
+            {
+                ResetIdle(animator);
+            }
     }
-
-    private void ResetIdle()
+    private void ResetIdle(Animator animator)
     {
-        if (_isBored)
-        {
-            _boredAnimation--;
-        }
-
         _isBored = false;
         _idleTime = 0;
+        animator.SetFloat("BoredAnimation", 0);
     }
 }
