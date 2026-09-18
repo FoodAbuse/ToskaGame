@@ -100,7 +100,7 @@ Material:
     m_Floats:
     - _AlphaClip: 1
     - _AlphaToMask: 1
-    - _Alpha_Cutoff: 0.5
+    - _Alpha_Cutoff: 0.236
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -140,7 +140,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _LeafColour: {r: 0.6675239, g: 0.8050314, b: 0.2202443, a: 0}
+    - _LeafColour: {r: 1, g: 1, b: 1, a: 0}
     - _Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _WindDir: {r: 1, g: 0, b: 0, a: 0}
