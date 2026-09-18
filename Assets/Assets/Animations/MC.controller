@@ -200,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3468b69ae730b904b99bdd3c2efe2401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _timeUntilBored: 10
+  _timeUntilBored: 15
   _numberOfBoredAnimations: 1
 --- !u!1101 &7165347034671638183
 AnimatorStateTransition:
