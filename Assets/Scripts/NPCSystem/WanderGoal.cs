@@ -67,4 +67,9 @@ public class WanderGoal : MonoGoal
         // this task should always be a low priority
         Debug.Log("wander goals Priority" + priority);
     }
+
+    public override void ExitFromGoal(GameObject owner)
+    {
+        
+    }
 }

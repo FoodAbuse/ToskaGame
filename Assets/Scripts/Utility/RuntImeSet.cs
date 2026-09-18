@@ -48,5 +48,10 @@ namespace Utility
         {
     
         }
+
+        public int GetCount()
+        {
+            return items.Count;
+        }
     }
 }

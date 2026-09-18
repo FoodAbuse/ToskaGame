@@ -9,7 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9706d2c73d03fb48a288b104f1253c7, type: 3}
-  m_Name: MortalityCheck
+  m_Script: {fileID: 11500000, guid: fba29e3e8137ba84baad12ab3f47ac65, type: 3}
+  m_Name: ChaseAttack
   m_EditorClassIdentifier: 
-  maxHP: 50
+  priority: 10
+  next: {fileID: 0}
+  chaseBonusSpeed: 3
+  attackDmg: 10
+  biteRange: 6
+  attacking: 0
+  leaping: 0
+  biteCooldown: 0.5
+  ownerNPC: {fileID: 0}
+  agent: {fileID: 0}

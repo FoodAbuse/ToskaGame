@@ -78,6 +78,15 @@ public class NPC : MonoBehaviour
         }
     }
 
+    public void HaltCurrentGoal()
+    {
+        if (_currentGoal != null)
+        {
+            _currentGoal.ExitFromGoal(gameObject);
+            ClearCurrentGoal();
+        }
+
+    }
     void Start()
     {
         CreatePersonalGoalBehaviourCopies();   // this calls the Method to create a copy of the Scriptable objects without risking changing them
@@ -192,7 +201,7 @@ public class NPCAction          // this is a class that contains an Ienumerable 
         actionType = TypeofAction;
         actionCoroutine = action;
     }
-    public enum ActionType{Movement,DroppingItem,Searching,LookingAtHeldItem,mortalityTracking} // the different types of actions. an NPC can only be running one at a time.
+    public enum ActionType{Movement,DroppingItem,Searching,LookingAtHeldItem,mortalityTracking,Attack} // the different types of actions. an NPC can only be running one at a time.
     public IEnumerator actionCoroutine;
     public ActionType actionType;
 }

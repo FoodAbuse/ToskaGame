@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Behaviour", menuName = "NPCBehaviour/PassiveBehaviours/MortalityBehaviour")]
-public class MortalityBehaviour : NPCPassiveBehaviour
+public class MortalityBehaviour : NPCPassiveBehaviour, IHealthSystem
 {
     // this is the Behaviour that handles NPCS being able to have hp and die. 
     // At present this is a MonoGoal when really it should be some other thing that npcs possess that they always check
@@ -40,5 +40,10 @@ public class MortalityBehaviour : NPCPassiveBehaviour
     public void RecieveAttack(AttackCharacteristic incomingAttack)
     {
         _currentHP -= incomingAttack.damage;
+    }
+
+    public float GetHealth()
+    {
+        return _currentHP;
     }
 }

@@ -3,18 +3,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FactionBehaviour : NPCPassiveBehaviour, INPCDeathCleanup
+[CreateAssetMenu(fileName = "New Faction Behaviour", menuName = "NPCBehaviour/PassiveBehaviours/FactionBehaviour")]
+public class FactionBehaviour : NPCPassiveBehaviour, INPCDeathCleanup, IFactionFollower
 {
+    // faction behaviour is both The faction the Creature belongs too and its feelings towards different factions
+    // also the creatures NPC is attached to it
+    
     public CreatureTolerances CreaturesTypes;
+    public CreatureTolerances EnemieTypes;
     public CreatureDictionary owningDictionary;
     NPC owningNPC;
-
     public Vector3 position
     {
         get
         {
             return owningNPC.transform.position;
         }
+    }
+
+    public IHealthSystem GetHealthSystem()
+    {
+        return Array.Find(owningNPC.CurrentPassiveBehaviours,g => g is MortalityBehaviour) as IHealthSystem;
     }
     
     public override IEnumerator BehaviourCoroutine(NPC owner)
@@ -32,15 +41,27 @@ public class FactionBehaviour : NPCPassiveBehaviour, INPCDeathCleanup
     {
         owningDictionary.Remove(this);
     }
-}
 
+    public Vector3 GetPosition()
+    {
+        return position;
+    }
+
+    public CreatureTolerances GetCreatureTypes()
+    {
+        return CreaturesTypes;
+    }
+}
+    
 [Flags]
 public enum CreatureTolerances
 {
-    Player = 0,
-    WildAnimal = 1,
-    Scavenger = 2,
-    Other = 3,
-    Warped = 4,
-    Sick= 5
+    None        = 0b_0000_0000,
+    Player      = 0b_0000_0001,
+    WildAnimal  = 0b_0000_0010,
+    Scavenger   = 0b_0000_0100,
+    Other       = 0b_0000_1000,
+    Warped      = 0b_0001_0000,
+    Sick        = 0b_0010_0000
 }
+

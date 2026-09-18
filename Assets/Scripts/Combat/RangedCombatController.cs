@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 using Utility;
 
-public class RangedCombatController : MonoBehaviour
+public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSystem
 {
     
     // every update this will draw a Cone collider out of the player and will look for targetable enemies. it will go from the Centre of the Cone outwards\
@@ -17,6 +17,10 @@ public class RangedCombatController : MonoBehaviour
     public int maximumTargetAllocation;
     public LayerMask interactableMask = Physics.DefaultRaycastLayers;
 
+    private CreatureTolerances _playerFaction = CreatureTolerances.Player;
+    private FactionBehaviour _factionBehaviour;
+
+    public float currentHealth = 20;
     
     
 
@@ -63,6 +67,8 @@ public class RangedCombatController : MonoBehaviour
     public void Start()
     {
         Debug.Log(transform.forward);
+       
+        CreatureDictionary.ActiveDictionary.Add(this);
     }
 
     private void Attack()
@@ -88,10 +94,6 @@ public class RangedCombatController : MonoBehaviour
         // [TODO] Calculate Area of Triangle
         
         //validTargets.Clear();
-        Vector3 triangleCentrePoint = transform.forward * TargetingRange;
-        Vector3 trianglePoint1 = transform.position;
-        Vector3 trianglePoint2 = triangleCentrePoint + transform.right * (ConeWidth/2);
-        Vector3 trianglePoint3 = triangleCentrePoint - transform.right * (ConeWidth/2);
         (float angle,Collider collider,ITargetable target) currentBestTarget = (360,null, null);
         for (int i = 0; i < numPTargets; i++)
         {
@@ -176,4 +178,34 @@ public class RangedCombatController : MonoBehaviour
     
     //
     // [TODO] Create debug method for drawing a debug mesh of the colliders
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public CreatureTolerances GetCreatureTypes()
+    {
+        return _playerFaction;
+    }
+
+    public IHealthSystem GetHealthSystem()
+    {
+        return this as IHealthSystem;
+    }
+    public void RecieveAttack(AttackCharacteristic incomingAttack)
+    {
+        currentHealth -= incomingAttack.damage;
+        if (currentHealth <= 0)
+        {
+            Debug.Log("You Died");
+            GetComponent<CharacterController>().enabled = false;
+            
+            gameObject.AddComponent<Rigidbody>();
+        }
+    }
+
+    public float GetHealth()
+    {
+        return currentHealth;
+    }
 }

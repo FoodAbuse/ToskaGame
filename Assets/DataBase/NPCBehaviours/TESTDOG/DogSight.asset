@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9706d2c73d03fb48a288b104f1253c7, type: 3}
-  m_Name: MortalityCheck
+  m_Script: {fileID: 11500000, guid: 35af74435942d1d43ad386bc3a86bfe9, type: 3}
+  m_Name: DogSight
   m_EditorClassIdentifier: 
-  maxHP: 50
+  targetingDistance: 30
+  detectionAngle: 90

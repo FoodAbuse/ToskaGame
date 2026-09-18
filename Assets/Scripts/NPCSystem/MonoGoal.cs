@@ -21,6 +21,8 @@ public abstract class MonoGoal : ScriptableObject
     public abstract void GoalFinished(GameObject owner); // a method to be run when the goal is completed.
     public abstract void EvaluatePriority(GameObject owner);
     
+    public abstract void ExitFromGoal(GameObject owner);
+    
 }
 
 
