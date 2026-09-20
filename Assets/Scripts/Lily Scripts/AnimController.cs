@@ -18,7 +18,15 @@ public class AnimController : MonoBehaviour
         {
             animator.SetBool("isWalking", true);
         }
-
+        else
+        {
+            if (Input.GetKey("s"))
+            {
+                animator.SetBool("isWalkingBackwards", true);
+            }
+            else
+                animator.SetBool("isWalkingBackwards", false);
+        }
         if (!Input.GetKey("w"))
         {
             animator.SetBool("isWalking", false);
