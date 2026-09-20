@@ -41,7 +41,7 @@ public class BoredBehaviour : StateMachineBehaviour
             else if (stateInfo.normalizedTime % 1 > 0.98)
             {
                 Debug.Log("idlereset!");
-                //ResetIdle(animator);
+                ResetIdle(animator);
             }
     }
     private void ResetIdle(Animator animator)
