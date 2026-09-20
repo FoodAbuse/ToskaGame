@@ -10,7 +10,7 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
     // every update this will draw a Cone collider out of the player and will look for targetable enemies. it will go from the Centre of the Cone outwards\
     [HideInInspector] public ITargetable target;
     public float TargetingRange;
-    public float ConeWidth;
+
 
     public float DetectionAngle;
     private List<ITargetable[]> targets;
@@ -25,7 +25,7 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
     
 
     //public AttackCharacteristic attackInfo;
-
+    public KeyCode AimKey = KeyCode.Mouse1;
     public KeyCode FireKey = KeyCode.Space;
 
     public float attackDamage = 5f;
@@ -44,11 +44,16 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
 
     public void Update()
     {
-        if (Input.GetKeyDown(FireKey))
+        if (Input.GetKey(AimKey))
         {
-            Debug.Log("Bang!");
-            Attack();
+            //that means we are aiming now. so tell the character controller somehow that we are aiming
+            if (Input.GetKeyDown(FireKey))
+            {
+                Debug.Log("Bang!");
+                Attack();
+            }
         }
+        
     }
     public void FixedUpdate()
     {
