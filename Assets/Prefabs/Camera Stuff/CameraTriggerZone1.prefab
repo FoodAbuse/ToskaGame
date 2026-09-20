@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2273784719030143595}
   - component: {fileID: 2273784719030143592}
   m_Layer: 2
-  m_Name: CameraTriggerZone
+  m_Name: CameraTriggerZone1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

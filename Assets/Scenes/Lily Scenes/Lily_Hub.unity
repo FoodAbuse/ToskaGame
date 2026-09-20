@@ -7630,7 +7630,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 925083897}
   m_HandleRect: {fileID: 925083895}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -13284,22 +13284,6 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 1867086118}
-    - target: {fileID: 3624734468229530504, guid: 2270f464c40e2024691b1de412a87f52, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7736022
-      objectReference: {fileID: 0}
-    - target: {fileID: 3624734468229530504, guid: 2270f464c40e2024691b1de412a87f52, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.14658906
-      objectReference: {fileID: 0}
-    - target: {fileID: 3624734468229530504, guid: 2270f464c40e2024691b1de412a87f52, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.6057048
-      objectReference: {fileID: 0}
-    - target: {fileID: 3624734468229530504, guid: 2270f464c40e2024691b1de412a87f52, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.11477436
-      objectReference: {fileID: 0}
     - target: {fileID: 4126393300690290077, guid: 2270f464c40e2024691b1de412a87f52, type: 3}
       propertyPath: m_LocalPosition.x
       value: 15.03915
