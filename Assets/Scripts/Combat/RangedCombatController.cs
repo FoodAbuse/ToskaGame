@@ -21,6 +21,8 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
     private FactionBehaviour _factionBehaviour;
 
     public float currentHealth = 20;
+    private AnimController _animController; // this class tries to call the anim controller to tell it what anims to play
+                                            // this is so if we need to worry about what animations are currently playing we can do it all in one class
     
     
 
@@ -47,11 +49,16 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
         if (Input.GetKey(AimKey))
         {
             //that means we are aiming now. so tell the character controller somehow that we are aiming
+            _animController.toggleAiming(true);
             if (Input.GetKeyDown(FireKey))
             {
                 Debug.Log("Bang!");
                 Attack();
             }
+        }
+        else
+        {
+            _animController.toggleAiming(false);
         }
         
     }
@@ -74,6 +81,7 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
         Debug.Log(transform.forward);
        
         CreatureDictionary.ActiveDictionary.Add(this);
+        _animController = GetComponent<AnimController>();
     }
 
     private void Attack()

@@ -5,7 +5,8 @@ using UnityEngine;
 public class AnimController : MonoBehaviour
 {
     Animator animator;
-    // Start is called before the first frame update
+    
+    bool _isAiming = false;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -31,5 +32,12 @@ public class AnimController : MonoBehaviour
         {
             animator.SetBool("isWalking", false);
         }
+        animator.SetBool("isAiming", _isAiming);
     }
+
+    public void toggleAiming(bool input)
+    {
+        _isAiming = input;
+    }
+    
 }
