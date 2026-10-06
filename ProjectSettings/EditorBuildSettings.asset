@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Lily Scenes/Menu.unity
+    guid: 38f56578d2f65ad4591f3427d03f751c
+  - enabled: 1
     path: Assets/Scenes/Lily Scenes/Lily_Hub.unity
     guid: 8061d59b0e096204e9b53472280c125c
   - enabled: 1
