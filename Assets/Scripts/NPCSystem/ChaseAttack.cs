@@ -105,6 +105,7 @@ public class ChaseAttackGoal : MonoGoal
         agent.speed = baseSpeed +  chaseBonusSpeed;
         while (true)
         {
+            currentCooldown -= Time.deltaTime;
             Vector3 targetPos = new Vector3(target.GetPosition().x, ownerNPC.transform.position.y,
                 target.GetPosition().z);
             agent.SetDestination(targetPos);
