@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Language.Lua;
 using UnityEngine;
 using UnityEngine.Timeline;
+using UnityEngine.UI;
 using Utility;
 
 public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSystem
 {
-    
+
     // every update this will draw a Cone collider out of the player and will look for targetable enemies. it will go from the Centre of the Cone outwards\
     [HideInInspector] public ITargetable target;
     public float TargetingRange;
@@ -20,8 +22,14 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
     private CreatureTolerances _playerFaction = CreatureTolerances.Player;
     private FactionBehaviour _factionBehaviour;
 
-    public float currentHealth = 20;
-    private AnimController _animController; // this class tries to call the anim controller to tell it what anims to play
+
+    public float maxHealth = 100;
+
+    private AnimController
+        _animController; // this class tries to call the anim controller to tell it what anims to play
+
+
+    [HideInInspector] public float currentHealth;
                                             // this is so if we need to worry about what animations are currently playing we can do it all in one class
     
     
@@ -31,7 +39,8 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
     public KeyCode FireKey = KeyCode.Space;
 
     public float attackDamage = 5f;
-
+    public float damageEffectFadeTime = 2f;
+    public GameObject DamageEffectOverlay;
     private ITargetableRuntimeSet _targetableRuntimeSet
     {
         get
@@ -82,6 +91,7 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
        
         CreatureDictionary.ActiveDictionary.Add(this);
         _animController = GetComponent<AnimController>();
+        currentHealth = maxHealth;
     }
 
     private void Attack()
@@ -208,6 +218,10 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
     public void RecieveAttack(AttackCharacteristic incomingAttack)
     {
         currentHealth -= incomingAttack.damage;
+        // trigger the hp damage screen here.
+        // starts a coroutine that counts down to 0 for the damage UI
+        // at 0 it end 
+        // new damage resets the damage countdown
         if (currentHealth <= 0)
         {
             Debug.Log("You Died");
@@ -215,8 +229,68 @@ public class RangedCombatController : MonoBehaviour, IFactionFollower, IHealthSy
             
             gameObject.AddComponent<Rigidbody>();
         }
+
+        if (DamageEffectOverlay != null)
+        {
+            if (!_damageEffectRunning)
+            {
+                _damageEffectTimer = 0;
+                StartCoroutine(DamageEffect());
+            }
+            else
+                _damageEffectTimer = 0;
+        }
     }
 
+    private float _damageEffectTimer = 0;
+    private bool _damageEffectRunning = false;
+
+    private IEnumerator DamageEffect()
+    {
+        // create the effect here
+        _damageEffectRunning = true;
+        DamageEffectOverlay.SetActive(true);
+        Image imagetoChange = DamageEffectOverlay.GetComponent<Image>();
+        float _newAlpha;
+        while(_damageEffectTimer < damageEffectFadeTime)
+        {
+            
+            _newAlpha = 1-(_damageEffectTimer / damageEffectFadeTime);
+            float _minimumFade = 1-(currentHealth / maxHealth);
+
+            if (_newAlpha > _minimumFade)
+            {
+                Color newcol =new Color(imagetoChange.color.r,imagetoChange.color.g,imagetoChange.color.b,_newAlpha);
+                imagetoChange.color = newcol;
+                _damageEffectTimer += Time.deltaTime;
+            }
+            else
+            {
+                Color newcol =new Color(imagetoChange.color.r,imagetoChange.color.g,imagetoChange.color.b,_minimumFade);
+                imagetoChange.color = newcol;
+                // the thingy is gonna stay like this then
+            }
+
+                //_damageEffectTimer -= Time.deltaTime;
+            
+            
+                //Color newcol = image.color;
+                //image.color =   new Color(newcol.r, newcol.g, newcol.b, _minimumFade*255);
+            
+            yield return null;
+
+
+        }
+            // set fade to match percentage of timer vs fade time
+        
+            //reduce counter by deltatime
+        DamageEffectOverlay.SetActive(false);
+        // calculate the Minimum fade based on player health
+        _damageEffectRunning = false;
+        // delete the effect here
+
+
+    }
     public float GetHealth()
     {
         return currentHealth;

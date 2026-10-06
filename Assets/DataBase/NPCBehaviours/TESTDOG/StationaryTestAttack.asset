@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fba29e3e8137ba84baad12ab3f47ac65, type: 3}
-  m_Name: ChaseAttack
+  m_Name: StationaryTestAttack
   m_EditorClassIdentifier: 
   priority: 10
   next: {fileID: 0}
-  chaseBonusSpeed: 3
+  chaseBonusSpeed: 0
   attackDmg: 10
-  biteRange: 6
+  biteRange: 5
   attacking: 0
   leaping: 0
-  biteCooldown: 3
+  biteCooldown: 5
   ownerNPC: {fileID: 0}
   agent: {fileID: 0}
