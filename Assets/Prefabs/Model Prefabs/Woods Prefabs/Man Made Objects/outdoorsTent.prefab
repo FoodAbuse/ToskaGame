@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7270606035657380221}
   - component: {fileID: 7470448291766089448}
   - component: {fileID: 522753195256905022}
+  - component: {fileID: 8680291348004063748}
   m_Layer: 0
   m_Name: outdoorsTent
   m_TagString: Untagged
@@ -1217,3 +1218,25 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 427646943052434540, guid: 255674e2ef8b3bf449708df748301e71, type: 3}
+--- !u!114 &8680291348004063748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4074767575888008562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f884e6d2d3a26a40bcc3694604c853d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containerGrid: {fileID: 11400000, guid: e712673f2e0839e4c8744e47bd29c2e9, type: 2}
+  width: 5
+  height: 5
+  hasGeneratedLoot: 0
+  inventoryTemplate: {fileID: 11400000, guid: f8a4f7cc2d5e0b343acaba9784a2a093, type: 2}
+  lootGenerator:
+    usesGlobalItemDatabase: 0
+    itemDatabase: {fileID: 11400000, guid: 0c83e3badd819f942bb40be54cabaeb0, type: 2}
+    lootTable: {fileID: 11400000, guid: b4ba9a21fd898444582b81ac7c58f5a1, type: 2}
+    settings: {fileID: 11400000, guid: b8fc89c1bfdb72f4d87ecc5e59dc704a, type: 2}

@@ -13,11 +13,9 @@ MonoBehaviour:
   m_Name: Batteries
   m_EditorClassIdentifier: 
   itemName: Batteries
-  _sprite: {fileID: -1821615476, guid: 9d113a9e63fa3e841bbf064961cc7fe3, type: 3}
-  width: 1
-  height: 1
+  _sprite: {fileID: 21300000, guid: 10d25e05aac087d4d899d9f179b7bf18, type: 3}
   rarity: 0
   itemType: 4
-  worldItemDefault: {fileID: 0}
+  worldItemDefault: {fileID: 66032571329618027, guid: 12799d63943ecdb4eabc8866a6fbb9df, type: 3}
   _gridPositions:
-  - {x: 0, y: 0}
+  - {x: 1, y: 1}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d4acd2890b3474dba1266f4bf513ad, type: 3}
   m_Name: BasicLootGeneratorSettings
   m_EditorClassIdentifier: 
-  minLootCount: 5
-  maxLootCount: 20
+  minLootCount: 1
+  maxLootCount: 5
   filterByItemType: 0
   allowedItemTypes: 0000000001000000020000000400000005000000

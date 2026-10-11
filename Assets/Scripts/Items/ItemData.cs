@@ -12,6 +12,7 @@ public enum ItemRarity
     Epic,
     Legendary,
     Cursed,
+    KeyItem,
 }
 
 public enum ItemType

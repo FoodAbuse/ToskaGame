@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2741f206061d3340b4b0f077a003778, type: 3}
+  m_Name: LootTents
+  m_EditorClassIdentifier: 
+  itemList:
+  - {fileID: 11400000, guid: 9ad98c8c87b500149a26e33d3303a6fc, type: 2}
+  - {fileID: 11400000, guid: 5d63e6923703f734ba1e2ca8458b0381, type: 2}
+  - {fileID: 11400000, guid: 7d8d08b707048dd479d86376caf98e14, type: 2}
+  - {fileID: 11400000, guid: d2590d20180f8ee42b21ff79e87c3ad9, type: 2}
+  - {fileID: 11400000, guid: 6b105a0f78613104b844c7fc2e1a1fd8, type: 2}
+  - {fileID: 11400000, guid: 79443ce1784ae6244be0ed1f61aca511, type: 2}
+  - {fileID: 11400000, guid: 2efe8051f28ee8d489493fc4fd52165f, type: 2}
+  - {fileID: 11400000, guid: b91cd16f606fe1e45a952a5d29246ce8, type: 2}
+  - {fileID: 11400000, guid: e508531805d447444b59594e7be72610, type: 2}
+  - {fileID: 11400000, guid: 3da2cba5bf72b9b4798d5536261c4ef1, type: 2}
+  - {fileID: 11400000, guid: 821b5511d518cb74a81b3b4fbfc86f35, type: 2}
+  - {fileID: 11400000, guid: 8830e83794440ca42a2bf2e5096a4ea5, type: 2}
