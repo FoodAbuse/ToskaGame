@@ -52,6 +52,7 @@ public static class UISystem
             uiReporterstoClose.Add(reporter);
         }
         uiReporterstoClose.ForEach(reporter => reporter.CloseUI());
+        CallPositionUpdate();
     }
 
     public static void CloseInventoryUI()
@@ -63,6 +64,8 @@ public static class UISystem
             uiReportersToClose.Add(reporter);
         }
         uiReportersToClose.ForEach(reporter => reporter.CloseUI());
+        
+        CallPositionUpdate();
     }
 
     public static bool OpenContainerUI(InventoryTemplate inventTemplate, ItemGrid itemGrid)
@@ -87,6 +90,7 @@ public static class UISystem
             uiReportersToClose.Add(reporter);
         }
         uiReportersToClose.ForEach(reporter => reporter.CloseUI());
+        CallPositionUpdate();
     }
 
     public static bool OpenInventoryUI(InventoryTemplate inventTemplate, ItemGrid inventoryGrid)
@@ -133,7 +137,7 @@ public static class UISystem
             return true;
         }
         
-        uiGremlin.StartGremlin(new Vector2(-1,0));
+        uiGremlin.StartGremlin();
         // here we call the character sheet gremlin or SidePanelGremlin IDk.
 
         return true;
@@ -287,6 +291,14 @@ public static class UISystem
         else
         {
             return (false, null);
+        }
+    }
+
+    public static void CallPositionUpdate()
+    {
+        foreach (var reporter in UIReporterRuntimeSet.GetItems())
+        {
+            reporter.UpdateUIPosition();
         }
     }
 }

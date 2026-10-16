@@ -28,6 +28,12 @@ public class UIReporter : MonoBehaviour
 
    public void CloseUI()
    {
+      UISystem.UIReporterRuntimeSet.Remove(this);
       Destroy(gameObject);
+   }
+
+   public virtual void UpdateUIPosition()
+   {
+      
    }
 }

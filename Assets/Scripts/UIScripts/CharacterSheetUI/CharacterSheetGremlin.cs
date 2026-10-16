@@ -14,6 +14,7 @@ public class CharacterSheetGremlin : UIReporter
     public GameObject CharacterSheetPanel;
     public WeaponRetrieverSlot weaponSlot;
     public ClothingSlot clothingSlot;
+    private UIReporter _target;
     
     
     private Vector2 _screenOffset;
@@ -53,14 +54,11 @@ public class CharacterSheetGremlin : UIReporter
     // equipped headgear
     // other character stuff
 
-    public void UpdateUI()
-    {
-        // this method looks at the data of the attached slots and tells them to update to match the ui
-        // liek the inventory gremlin
-    }
+
     //[TODO] give UIGremlin a Parent class that this can call on instead. or an interface
     public void StartGremlin(UIReporter targetToFollow)
     {
+        _target = targetToFollow;
         Vector3 targetPosition = new Vector2(targetToFollow.RootTarget.transform.position.x + targetToFollow.RootTarget.rect.size.x /2, targetToFollow.RootTarget.transform.position.y);
         RectTransform csRect = CharacterSheetPanel.GetComponent<RectTransform>();
         csRect.pivot = new Vector2(0, .5f);
@@ -71,6 +69,7 @@ public class CharacterSheetGremlin : UIReporter
     }
     public void StartGremlin(UIReporter targetToFollow, Vector2Int offset)
     {
+        _target = targetToFollow;
         if (offset == Vector2.zero)
             offset = new Vector2Int(1, 1);
         //offset direction determines which side of the base panel this will aim for 
@@ -110,7 +109,13 @@ public class CharacterSheetGremlin : UIReporter
 
     }
 
-    public void StartGremlin(Vector2 newPanelOffset)
+    public void StartGremlin()
+    {
+        DefaultPlacement();
+       
+    }
+
+    public void DefaultPlacement()
     {
         RectTransform ipRect = CharacterSheetPanel.GetComponent<RectTransform>();
         Rect areaRect = Screen.safeArea;
@@ -146,9 +151,16 @@ public class CharacterSheetGremlin : UIReporter
         ipRect.anchorMin = new Vector2(0, 0);
         ipRect.pivot = new Vector2(.5f,.5f);
         ipRect.anchoredPosition = targetPosition;
-       
+
     }
-    
+
+    public override void UpdateUIPosition()
+    {
+        if (!UISystem.UIReporterRuntimeSet.Contains(_target))
+        {
+            DefaultPlacement();
+        }
+    }
     
 }
 

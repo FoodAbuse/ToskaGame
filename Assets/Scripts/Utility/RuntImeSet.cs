@@ -53,5 +53,11 @@ namespace Utility
         {
             return items.Count;
         }
+
+        public bool Contains(T t)
+        {
+            if (items.Contains(t)) return true;
+            return false;
+        }
     }
 }
