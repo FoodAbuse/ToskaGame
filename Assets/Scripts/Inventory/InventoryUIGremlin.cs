@@ -194,8 +194,6 @@ public class InventoryUIGremlin : UIReporter
             targetPos.y -= slotOffset.y;
         }
         itemsParentRect.SetAsLastSibling(); // so it sits at the bottom of the heirarchy
-        //find whatever is running the Inventory panels inventory code and tell it to create its prefabs idk
-        ToskaUtilities.DebugItemList(inventoryGrid);
         
         // here is were we will start drawing the Inventory Items in the inventory for now
         /*List<ItemWithDrawPosition> itemGridList = inventoryGrid.GetItemsWithPosition();
@@ -216,7 +214,6 @@ public class InventoryUIGremlin : UIReporter
         _InventoryUpdateListener.Event = UISystem.UpdateInventoryUI;
         _InventoryUpdateListener.Response.AddListener(UpdateInventoryUI);
         _InventoryUpdateListener.RegisterToEvent();             // gotta do this otherwise it will never actually get called
-        
     }
 
     public void UpdateInventoryUI()
@@ -272,7 +269,6 @@ public class InventoryUIGremlin : UIReporter
             Vector3 targetPos = GridSpaceInteractables[_itemGrid.GridSpaces[localOrigin]].gameObject.GetComponent<RectTransform>().anchoredPosition;
             DisplayItem (t, targetPos);
         }
-        
     }
 
     public void DisplayItem(InventoryItem itemToDisplay, Vector2 targetPos)

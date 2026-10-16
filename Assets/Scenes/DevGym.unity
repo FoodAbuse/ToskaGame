@@ -1942,9 +1942,17 @@ PrefabInstance:
       value: TestingBeanStorage
       objectReference: {fileID: 0}
     - target: {fileID: 6181306374359214167, guid: fdb32a7497ec4b1419bf57bc47bc6a3c, type: 3}
+      propertyPath: containerGrid
+      value: 
+      objectReference: {fileID: 11400000, guid: e712673f2e0839e4c8744e47bd29c2e9, type: 2}
+    - target: {fileID: 6181306374359214167, guid: fdb32a7497ec4b1419bf57bc47bc6a3c, type: 3}
+      propertyPath: inventoryTemplate
+      value: 
+      objectReference: {fileID: 11400000, guid: f8a4f7cc2d5e0b343acaba9784a2a093, type: 2}
+    - target: {fileID: 6181306374359214167, guid: fdb32a7497ec4b1419bf57bc47bc6a3c, type: 3}
       propertyPath: lootGenerator.settings
       value: 
-      objectReference: {fileID: 11400000, guid: b8fc89c1bfdb72f4d87ecc5e59dc704a, type: 2}
+      objectReference: {fileID: 11400000, guid: e4887f2e565714145ab31ca036efde80, type: 2}
     - target: {fileID: 6181306374359214167, guid: fdb32a7497ec4b1419bf57bc47bc6a3c, type: 3}
       propertyPath: lootGenerator.lootTable
       value: 
@@ -1952,9 +1960,8 @@ PrefabInstance:
     - target: {fileID: 6181306374359214167, guid: fdb32a7497ec4b1419bf57bc47bc6a3c, type: 3}
       propertyPath: lootGenerator.itemDatabase
       value: 
-      objectReference: {fileID: 11400000, guid: 1c559688b0816774eb8ac87e24f3fd71, type: 2}
-    m_RemovedComponents:
-    - {fileID: 6181306374359214167, guid: fdb32a7497ec4b1419bf57bc47bc6a3c, type: 3}
+      objectReference: {fileID: 11400000, guid: 6cec8c60cb8decc4d98799d3b805fad3, type: 2}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
