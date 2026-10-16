@@ -1399,6 +1399,7 @@ GameObject:
   - component: {fileID: 3905405849621337732}
   - component: {fileID: 219355227518870079}
   - component: {fileID: 8052127785446904138}
+  - component: {fileID: 721207082228777721}
   m_Layer: 5
   m_Name: Eq Weapon 1 Slot
   m_TagString: Untagged
@@ -1463,6 +1464,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &721207082228777721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097773232579651708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6262491cddcf34198c684b92d67080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5241333505196610815
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,6 +1487,7 @@ GameObject:
   - component: {fileID: 433148467492691063}
   - component: {fileID: 6076370310820828099}
   - component: {fileID: 2051226091456546590}
+  - component: {fileID: 1756320379039934102}
   m_Layer: 5
   m_Name: Eq Weapon 2 Slot
   m_TagString: Untagged
@@ -1538,6 +1552,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1756320379039934102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5241333505196610815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f6262491cddcf34198c684b92d67080, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6037997695776703892
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,6 +1617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiType: 4
   CharacterSheetPanel: {fileID: 789220938483456903}
+  weaponSlot: {fileID: 0}
   clothingSlot: {fileID: 0}
 --- !u!223 &1269114214430615173
 Canvas:
@@ -1649,6 +1676,7 @@ GameObject:
   - component: {fileID: 4687522825511475546}
   - component: {fileID: 2324561460917313455}
   - component: {fileID: 199411413295093204}
+  - component: {fileID: 2709294526343750337}
   m_Layer: 5
   m_Name: Eq Mask Slot
   m_TagString: Untagged
@@ -1713,6 +1741,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2709294526343750337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6245857428514603833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2060e3577096a469b56af940345277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6817643772949858654
 GameObject:
   m_ObjectHideFlags: 0

@@ -51,9 +51,9 @@ public class ITargetableRuntimeSet : RuntimeSet<ITargetable>
     }
     private static void TargetChanged()
     {
-        foreach (ITargetListeners listener in _playerTargetListeners)
+        foreach (ITargetListeners listener in PlayerTargetListeners)
         {
-            listener.Response(_playerTarget);
+            listener.Response(PlayerTarget);
         }
     }
 

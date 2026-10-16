@@ -185,4 +185,6 @@ public class CharacterSheetData : ScriptableObject
 
     public WeaponData equippedWeapon;
     public ClothingData equippedClothing;
+
+    public bool AddWeaponData;
 }
