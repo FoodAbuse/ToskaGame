@@ -11,9 +11,13 @@ public class UIController : MonoBehaviour
     
     public KeyCode CloseUIKey = KeyCode.Escape;
 
+    public KeyCode toggleCharacterSheet = KeyCode.C;
+
+    [HideInInspector]
     public ItemGrid playerInventory;            // the item grid
 
     public InventoryTemplate playerInventoryTemplate;   // the temp clas for handling Inventories prefabs and their slots
+    public GameObject characterUIPrefab;
 
     public int InventoryHeight;
     public int InventoryWidth;
@@ -29,6 +33,11 @@ public class UIController : MonoBehaviour
             // we call the UISystem to Display the inventory. in case we are in a situation when we do not want the inventory to be openable
             //
             UISystem.OpenInventoryUI(playerInventoryTemplate,playerInventory);
+        }
+
+        if (Input.GetKeyDown(toggleCharacterSheet))
+        {
+            UISystem.OpenCharacterSheetUI(characterUIPrefab);
         }
 
         if (Input.GetKeyDown(CloseUIKey))

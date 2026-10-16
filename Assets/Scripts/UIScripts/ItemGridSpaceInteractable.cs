@@ -38,7 +38,7 @@ public class ItemGridSpaceInteractable : InteractableComponent, IReceiver
         Debug.Log(ItemGridSpace.GridPosition);
     }
 
-    public bool Receive(InventoryItem item, ItemGridSpaceInteractable origin)
+    public virtual bool Receive(InventoryItem item, ItemGridSpaceInteractable origin)
     {
         // this will be called when the Object is recieve
         //origin is the component the Itemdata came from I guess. 

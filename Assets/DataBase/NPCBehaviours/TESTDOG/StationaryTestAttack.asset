@@ -16,9 +16,9 @@ MonoBehaviour:
   next: {fileID: 0}
   chaseBonusSpeed: 0
   attackDmg: 10
-  biteRange: 5
+  biteRange: 6
   attacking: 0
   leaping: 0
-  biteCooldown: 5
+  biteCooldown: 3
   ownerNPC: {fileID: 0}
   agent: {fileID: 0}

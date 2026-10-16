@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DogSight
   m_EditorClassIdentifier: 
   targetingDistance: 30
-  detectionAngle: 90
+  detectionAngle: 180

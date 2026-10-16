@@ -91,7 +91,6 @@ public static class UISystem
 
     public static bool OpenInventoryUI(InventoryTemplate inventTemplate, ItemGrid inventoryGrid)
     {
-        bool inventOpen = false;
         List<UIReporter> uiReporters = UIReporterRuntimeSet.GetItems();
         // hacky boolean check since we dont actually a child type of UIReporter just an enum with the different types on it
         if (uiReporters.Any(rep => rep.uiType == UIReporter.UIType.INVENTORY))      //checks if any of the elements meets a condition
@@ -106,6 +105,58 @@ public static class UISystem
         
 
         return true;
+    }
+
+    public static bool OpenCharacterSheetUI(GameObject characterSheetPrefab)
+    {
+        List<UIReporter> uiReporters = UIReporterRuntimeSet.GetItems();
+        if (uiReporters.Any(rep => rep.uiType == UIReporter.UIType.CHARACTERSHEET))
+        {
+            CloseCharacterSheetUI();
+            Debug.Log("closing character sheet");
+            return false;
+        }
+
+        Debug.Log("openingSheet");
+        CharacterSheetGremlin uiGremlin = GameObject.Instantiate(characterSheetPrefab).GetComponent<CharacterSheetGremlin>();
+
+        UIReporter targetToFollow = LocateInventoryUI();
+        if (targetToFollow != null)
+            uiGremlin.StartGremlin(targetToFollow);
+        else
+            uiGremlin.StartGremlin(new Vector2(-1,0));
+        // here we call the character sheet gremlin or SidePanelGremlin IDk.
+
+        return true;
+    }
+
+    private static UIReporter LocateInventoryUI()
+    {
+        UIReporter uiReporter = null;
+        foreach (var reporter in UIReporterRuntimeSet.GetItems()
+                     .Where(rep => rep.uiType == UIReporter.UIType.INVENTORY))
+        {
+            uiReporter = reporter;
+        }
+        return uiReporter;
+    }
+
+    public static void CloseCharacterSheetUI()
+    {
+        List<UIReporter>  uiReportersToClose = new List<UIReporter>();
+        foreach (var reporter in UIReporterRuntimeSet.GetItems()
+                     .Where(rep => rep.uiType == UIReporter.UIType.CHARACTERSHEET))
+        {
+            uiReportersToClose.Add(reporter);
+        }
+        uiReportersToClose.ForEach(reporter => reporter.CloseUI());
+    }
+    
+    // [TODO] write a More general CloseUI method with a Parameter for UITYPE  
+    public static void OpenFoldoutPrefab(UIReporter basePanel, GameObject prefab)
+    {
+        // this method will be called to make a prefab next hover next to a base panel
+        
     }
 
     private static void ResizeToFitObject(GameObject uiTargetObject, GameObject objectToFit, float paddingWidth,
@@ -220,3 +271,4 @@ public static class UISystem
         }
     }
 }
+
