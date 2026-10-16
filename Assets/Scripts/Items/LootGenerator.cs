@@ -30,13 +30,12 @@ public class LootGenerator
     public List<ItemData> GenerateLoot()
     {
         List<ItemData> generatedLoot = new List<ItemData>();
+        ItemDatabase selectedItemDatabase = SelectedItemDatabase;
 
-        if (itemDatabase == null || lootTable == null || settings == null || itemDatabase.itemList == null)
+        if (selectedItemDatabase == null || lootTable == null || settings == null || selectedItemDatabase.itemList == null)
             return generatedLoot;
 
-        int minCount = settings.MinLootCount;
-        int maxCount = settings.MaxLootCount;
-        int itemsToGenerate = UnityEngine.Random.Range(minCount, maxCount + 1);
+        int itemsToGenerate = settings.GetRandomLootCount();
 
         for (int i = 0; i < itemsToGenerate; i++)
         {
