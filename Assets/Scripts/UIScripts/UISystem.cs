@@ -122,9 +122,18 @@ public static class UISystem
 
         UIReporter targetToFollow = LocateInventoryUI();
         if (targetToFollow != null)
-            uiGremlin.StartGremlin(targetToFollow);
-        else
-            uiGremlin.StartGremlin(new Vector2(-1,0));
+        {
+            uiGremlin.StartGremlin(targetToFollow, Vector2Int.right);
+            return true;
+        }
+        targetToFollow = LocateContainerUI();
+        if(targetToFollow != null) 
+        { 
+            uiGremlin.StartGremlin(targetToFollow, Vector2Int.left); 
+            return true;
+        }
+        
+        uiGremlin.StartGremlin(new Vector2(-1,0));
         // here we call the character sheet gremlin or SidePanelGremlin IDk.
 
         return true;
@@ -137,6 +146,16 @@ public static class UISystem
                      .Where(rep => rep.uiType == UIReporter.UIType.INVENTORY))
         {
             uiReporter = reporter;
+        }
+        return uiReporter;
+    }
+
+    private static UIReporter LocateContainerUI()
+    {
+        UIReporter uiReporter = null;
+        foreach (var reporter in UIReporterRuntimeSet.GetItems().Where(rep => rep.uiType == UIReporter.UIType.CONTAINER))
+        {
+           uiReporter = reporter; 
         }
         return uiReporter;
     }

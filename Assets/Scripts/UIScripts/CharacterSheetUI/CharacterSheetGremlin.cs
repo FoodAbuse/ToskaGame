@@ -69,6 +69,46 @@ public class CharacterSheetGremlin : UIReporter
         //[TODO] write code for handling displaying on Left/right of target
 
     }
+    public void StartGremlin(UIReporter targetToFollow, Vector2Int offset)
+    {
+        if (offset == Vector2.zero)
+            offset = new Vector2Int(1, 1);
+        //offset direction determines which side of the base panel this will aim for 
+        Vector3 targetPosition;
+        RectTransform csRect = CharacterSheetPanel.GetComponent<RectTransform>();
+        switch (Mathf.Clamp(offset.x,-1,1), Mathf.Clamp(offset.y,-1,1))
+        {
+            case (-1, -1):
+            case(-1,1):
+            case (-1, 0): 
+                targetPosition =
+                    new Vector2(
+                        targetToFollow.RootTarget.transform.position.x - targetToFollow.RootTarget.rect.size.x / 2,
+                        targetToFollow.RootTarget.transform.position.y);
+                csRect.pivot = new Vector2(1, .5f);
+                csRect.anchoredPosition = targetPosition;
+                break;
+            
+            case (1, -1):
+            case (1, 1):
+            case (1,0):
+                targetPosition = new Vector2(targetToFollow.RootTarget.transform.position.x + targetToFollow.RootTarget.rect.size.x /2, targetToFollow.RootTarget.transform.position.y);
+                csRect.pivot = new Vector2(0, .5f);
+                csRect.anchoredPosition = targetPosition;
+                break;
+            
+            case(0,1):
+                //[TODO] write code for offsetting upwards
+                break;
+            case(0,-1): 
+                //[ToDo write code for offsetting downwards
+                break;
+        }
+        
+
+       
+
+    }
 
     public void StartGremlin(Vector2 newPanelOffset)
     {
@@ -106,7 +146,7 @@ public class CharacterSheetGremlin : UIReporter
         ipRect.anchorMin = new Vector2(0, 0);
         ipRect.pivot = new Vector2(.5f,.5f);
         ipRect.anchoredPosition = targetPosition;
-        //[TODO] Write code for creating a floating Charactersheet not latched onto any other panel
+       
     }
     
     
