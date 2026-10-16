@@ -1773,8 +1773,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggleKey: 105
   CloseUIKey: 27
+  toggleCharacterSheet: 99
   playerInventory: {fileID: 0}
   playerInventoryTemplate: {fileID: 11400000, guid: 728a738d8c2e9674999597ab9a454fa8, type: 2}
+  characterUIPrefab: {fileID: 0}
   InventoryHeight: 3
   InventoryWidth: 3
 --- !u!114 &727713877
@@ -3091,6 +3093,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MC
       objectReference: {fileID: 0}
+    - target: {fileID: 1907666286208838131, guid: 4dddd3105e20bb04492bc38d0bc078b7, type: 3}
+      propertyPath: characterUIPrefab
+      value: 
+      objectReference: {fileID: 6037997695776703892, guid: b7c73f2018200fc45a98be530b489fe4, type: 3}
     - target: {fileID: 2147936903562998156, guid: 4dddd3105e20bb04492bc38d0bc078b7, type: 3}
       propertyPath: playerCamera
       value: 

@@ -11,6 +11,7 @@ public class CharacterSheetGremlin : UIReporter
     
     private GameObject _characterSheet;
     public GameObject CharacterSheet { get { return _characterSheet; } }
+    public GameObject CharacterSheetPanel;
     public WeaponRetrieverSlot weaponSlot;
     public ClothingSlot clothingSlot;
     
@@ -60,21 +61,18 @@ public class CharacterSheetGremlin : UIReporter
     //[TODO] give UIGremlin a Parent class that this can call on instead. or an interface
     public void StartGremlin(UIReporter targetToFollow)
     {
-        Vector3 targetPosition = new Vector2(
-            targetToFollow.RootTarget.rect.xMax, targetToFollow.RootTarget.rect.yMax);
-        transform.localPosition = targetPosition;
-        //[TODO] write ui instantiation code
+        Vector3 targetPosition = new Vector2(targetToFollow.RootTarget.transform.position.x + targetToFollow.RootTarget.rect.size.x /2, targetToFollow.RootTarget.transform.position.y);
+        RectTransform csRect = CharacterSheetPanel.GetComponent<RectTransform>();
+        csRect.pivot = new Vector2(0, .5f);
+        csRect.anchoredPosition = targetPosition;
 
-        // get a reference to an inventory panel or something
-        // find its upper right corner and use that for our origin
-
-        // set the panel of the Inventory (or UI object
+        //[TODO] write code for handling displaying on Left/right of target
 
     }
 
     public void StartGremlin(Vector2 newPanelOffset)
     {
-        RectTransform ipRect = transform.GetComponent<RectTransform>();
+        RectTransform ipRect = CharacterSheetPanel.GetComponent<RectTransform>();
         Rect areaRect = Screen.safeArea;
         // perform calculation to return screen offset scaled into the Safe area -1 far left 0 mid, 1 max
         Vector2 targetPosition;
@@ -106,6 +104,7 @@ public class CharacterSheetGremlin : UIReporter
         
         ipRect.anchorMax = new Vector2(0, 0);
         ipRect.anchorMin = new Vector2(0, 0);
+        ipRect.pivot = new Vector2(.5f,.5f);
         ipRect.anchoredPosition = targetPosition;
         //[TODO] Write code for creating a floating Charactersheet not latched onto any other panel
     }
