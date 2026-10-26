@@ -3093,10 +3093,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MC
       objectReference: {fileID: 0}
-    - target: {fileID: 1907666286208838131, guid: 4dddd3105e20bb04492bc38d0bc078b7, type: 3}
-      propertyPath: characterUIPrefab
-      value: 
-      objectReference: {fileID: 6037997695776703892, guid: b7c73f2018200fc45a98be530b489fe4, type: 3}
     - target: {fileID: 2147936903562998156, guid: 4dddd3105e20bb04492bc38d0bc078b7, type: 3}
       propertyPath: playerCamera
       value: 

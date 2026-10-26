@@ -104,7 +104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f25459b7b3a45264c96eb0f786673d25, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.48
+      value: 2.11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f25459b7b3a45264c96eb0f786673d25, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1038,8 +1038,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggleKey: 105
   CloseUIKey: 27
+  toggleCharacterSheet: 99
   playerInventory: {fileID: 0}
   playerInventoryTemplate: {fileID: 11400000, guid: 728a738d8c2e9674999597ab9a454fa8, type: 2}
+  characterUIPrefab: {fileID: 6037997695776703892, guid: b7c73f2018200fc45a98be530b489fe4, type: 3}
   InventoryHeight: 3
   InventoryWidth: 3
 --- !u!114 &5528304351089340255
@@ -1060,10 +1062,13 @@ MonoBehaviour:
   interactableMask:
     serializedVersion: 2
     m_Bits: 1011
+  maxHealth: 100
   currentHealth: 20
   AimKey: 324
   FireKey: 323
   attackDamage: 5
+  damageEffectFadeTime: 2
+  DamageEffectOverlay: {fileID: 0}
 --- !u!4 &7610976047948499621 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1192550280252930704, guid: f25459b7b3a45264c96eb0f786673d25, type: 3}
